@@ -89,13 +89,13 @@ class MiniChallenge {
                 break;
 
             case 1:
-                if(eliminatedCast.length!=0 && eliminatedCast[0].GetRelation(currentCast[who].getName()).GetPoints()>=2)
+                if(eliminatedCast.length!=0 && eliminatedCast[0].GetRelation(currentCast[who].getName()).GetPoints()>=2 && s14Premiere==false)
                 {
                     screen.createImage(currentCast[who].image);
                     screen.createImage(eliminatedCast[0].image);
                     screen.createBold(currentCast[who].getName()+" feels really sad that's their friend "+eliminatedCast[0].getName()+" just got eliminated.");
                 }
-                else if (eliminatedCast.length!=0 && eliminatedCast[0].GetRelation(currentCast[who].getName()).GetPoints()<2)
+                else if (eliminatedCast.length!=0 && eliminatedCast[0].GetRelation(currentCast[who].getName()).GetPoints()<2 && s14Premiere==false)
                 {
                     screen.createImage(currentCast[who].image);
                     screen.createImage(eliminatedCast[0].image);
