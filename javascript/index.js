@@ -63,16 +63,16 @@ class MiniChallenge {
                 if(eliminatedCast.length==0)
                 {
                     let secwho = randomNumber(0,currentCast.length-1);
-                    let issame = true;
-                    while(issame!=false)
+                    let issame = false;
+                    while(issame==false)
                     {
                         if(secwho == who)
                         {
-                            issame=true;
+                            issame=false;
                         }
                         else
                         {
-                            issame =false;
+                            issame=true;
                         }
                         secwho = randomNumber(0,currentCast.length-1);
                     }
@@ -89,13 +89,13 @@ class MiniChallenge {
                 break;
 
             case 1:
-                if(eliminatedCast.length!=0 && eliminatedCast[0].GetRelation(currentCast[who].getName()).GetPoints()>=2 && s14Premiere==false)
+                if(eliminatedCast.length!=0 && currentCast[who].GetRelation(eliminatedCast[0].getName())>=2 && s14Premiere==false)
                 {
                     screen.createImage(currentCast[who].image);
                     screen.createImage(eliminatedCast[0].image);
                     screen.createBold(currentCast[who].getName()+" feels really sad that's their friend "+eliminatedCast[0].getName()+" just got eliminated.");
                 }
-                else if (eliminatedCast.length!=0 && eliminatedCast[0].GetRelation(currentCast[who].getName()).GetPoints()<2 && s14Premiere==false)
+                else if (eliminatedCast.length!=0 && currentCast[who].GetRelation(eliminatedCast[0].getName())<2 && s14Premiere==false)
                 {
                     screen.createImage(currentCast[who].image);
                     screen.createImage(eliminatedCast[0].image);
@@ -6167,7 +6167,7 @@ class Queen {
         {
             if(this.relationships[i].GetQueen().getName()==Queen)
             {
-                return(this.relationships[i]);
+                return(this.relationships[i].GetPoints());
             }
         }
     }
