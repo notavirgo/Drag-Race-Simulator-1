@@ -52,9 +52,108 @@ class MiniChallenge {
             screen.createImage(currentCast[second].image, "royalblue");
             screen.createBold(`${currentCast[winner].getName()} and ${currentCast[second].getName()} won the mini-challenge!`);
         }
+    }
+
+    generateRandomEvent(screen) {
+        let Generator = randomNumber(0,1);
         
+        let who = randomNumber(0,currentCast.length-1);
+        switch(Generator){
+            case 0:
+                if(eliminatedCast.length==0)
+                {
+                    let secwho = randomNumber(0,currentCast.length-1);
+                    let issame = true;
+                    while(issame!=false)
+                    {
+                        if(secwho == who)
+                        {
+                            issame=true;
+                        }
+                        else
+                        {
+                            issame =false;
+                        }
+                        secwho = randomNumber(0,currentCast.length-1);
+                    }
+                    screen.createImage(currentCast[who].image);
+                    screen.createImage(currentCast[secwho].image);
+                    screen.createBold(currentCast[who].getName()+" and "+currentCast[secwho].getName()+" knew each others before coming here! (Their base relation is now 2, meaning they are friendly towards each others)");
+                    currentCast[who].ChangeRelation(currentCast[secwho].getName(),2);
+                    currentCast[secwho].ChangeRelation(currentCast[who].getName(),2);
+                }
+                else
+                {
+                    screen.createBold("The others queens discuss about the results of last episode.");
+                }
+                break;
+
+            case 1:
+                if(eliminatedCast.length!=0 && eliminatedCast[0].GetRelation(currentCast[who].getName()).GetPoints()>=2)
+                {
+                    screen.createImage(currentCast[who].image);
+                    screen.createImage(eliminatedCast[0].image);
+                    screen.createBold(currentCast[who].getName()+" feels really sad that's their friend "+eliminatedCast[0].getName()+" just got eliminated.");
+                }
+                else if (eliminatedCast.length!=0 && eliminatedCast[0].GetRelation(currentCast[who].getName()).GetPoints()<2)
+                {
+                    screen.createImage(currentCast[who].image);
+                    screen.createImage(eliminatedCast[0].image);
+                    screen.createBold(currentCast[who].getName()+" felt like this was "+eliminatedCast[0].getName()+" time to go.");
+                }
+                else
+                {
+                    screen.createImage(currentCast[who].image);
+                    screen.createBold(currentCast[who].getName()+" feels enthusiastic about being here!");
+                }
+                break;
+        }
     }
 }
+
+class Judge{
+    constructor(name, image = "noimage"){
+        this.name = name;
+        if (image == "noimage")
+            this.image = "image/queens/noimage.jpg";
+        else
+            this.image = "image/judges/" + image + ".webp";
+    }
+
+    getName()
+    {
+        return(this.name);
+    }
+}
+
+let Ru = new Judge("Rupaul","Rupaul");
+let Michelle = new Judge("Michelle Visage","Michelle");
+let Carson = new Judge("Carson Kressley", "Carson");
+let Ross = new Judge("Ross Mathews", "Ross");
+let QueenB = new Judge("Béyoncé","QueenB");
+let Latoya = new Judge("La Toya Jackson","Latoya");
+let NickiM = new Judge("Nicki Minaj","NickiM");
+let KylieM = new Judge("Kylie Minogue","Kylie");
+let Jlo = new Judge("Jennifer Lopez","JLo");
+let Madonna = new Judge("Madonna","Madonna");
+let Merle = new Judge("Merle Ginsberg","Merle");
+let Lizzo = new Judge("Lizzo","Lizzo");
+let Megan = new Judge("Megan Thee Stallion","Megan");
+let AndrewG = new Judge("Andrew Garfield","Andrew");
+let Zendaya = new Judge("Zendaya","Zendaya");
+let Timothee = new Judge("Timothée Chalamet","Timothee");
+let LadyB = new Judge("Lady Bunny","LadyB");
+let KimK = new Judge("Kim Kardashian","KimK");
+let KylieJ = new Judge("Kylie Jenner","Kylie Jenner");
+let KendallJ = new Judge("Kendall Jenner","KendallJ");
+let LadyG = new Judge("Lady Gaga","LadyG");
+let LonyL = new Judge("Lony Love","LonyL");
+let Rhys = new Judge("Rhys Nicholson","Rhys");
+let JeremyS = new Judge("Jeremy Scott","JeremyS");
+let DonatellaV = new Judge("Donatella Versace","DonatellaV");
+
+let guestsjudges = [QueenB,Latoya,NickiM,KylieM,Jlo,Madonna,Merle,Lizzo,Megan,AndrewG,Zendaya,Timothee,LadyB,KimK,KylieJ,KendallJ,LadyG,LonyL,Rhys,JeremyS,DonatellaV];
+
 //challenge modifiers:
 let actingChallengeCounter = 0;
 let comedyChallengeCounter = 0;
@@ -74,10 +173,15 @@ let lastChallenge = '';
 function miniChallenge() {
     let miniChallengeScreen = new Scene();
     miniChallengeScreen.clean();
-    miniChallengeScreen.createHeader("Mini-challenge!");
-    miniChallengeScreen.createParagraph("", "Description");
+    miniChallengeScreen.createHeader("Before the challenge...");
     document.body.style.backgroundImage = "url('image/werkroom.webp')";
     let challenge = new MiniChallenge();
+    miniChallengeScreen.createBigText("The queens talk a little bit...");
+    challenge.generateRandomEvent(miniChallengeScreen);
+    miniChallengeScreen.createHorizontalLine();
+    miniChallengeScreen.createBigText("Now it's time for the mini-challenge!");
+    miniChallengeScreen.createHorizontalLine();
+    miniChallengeScreen.createParagraph("", "Description");
     challenge.generateDescription();
     challenge.rankPerformances();
     //deal with maxi chalenges:
@@ -788,6 +892,111 @@ function talentshow() {
 //performance:
 function queensPerformances() {
     let performanceScreen = new Scene();
+    performanceScreen.createHorizontalLine();
+    performanceScreen.createBigText("This week judging panel will be...");
+
+        performanceScreen.createImage(Ru.image);
+        performanceScreen.createImage(Michelle.image);
+
+        let judgetext = "Rupaul Charles, Michelle Visage, ";
+
+        let carsonorross = randomNumber(0,3);
+
+        let firstjudge = randomNumber(0,guestsjudges.length-1);
+        let secondjudge;
+        let thirdjudge;
+        let issame;
+
+        switch(carsonorross){
+            case 0:
+                issame = true;
+
+                while(issame == true)
+                {
+                    secondjudge = randomNumber(0,guestsjudges.length-1);
+                    if(guestsjudges[secondjudge].getName()==guestsjudges[firstjudge].getName())
+                    {
+                        issame = true;
+                    }
+                    else
+                    {
+                        issame = false;
+                    }
+                }
+
+                let issamethird = true;
+                while(issamethird == true)
+                {
+                    thirdjudge = randomNumber(0,guestsjudges.length-1);
+                    if(guestsjudges[thirdjudge].getName()==guestsjudges[firstjudge].getName() || guestsjudges[thirdjudge].getName()==guestsjudges[secondjudge].getName())
+                    {
+                        issamethird = true;
+                    }
+                    else
+                    {
+                        issamethird = false;
+                    }
+                }
+
+                performanceScreen.createImage(guestsjudges[firstjudge].image);
+                performanceScreen.createImage(guestsjudges[secondjudge].image);
+                performanceScreen.createImage(guestsjudges[thirdjudge].image);
+                judgetext += guestsjudges[firstjudge].getName()+", "+guestsjudges[secondjudge].getName()+" and "+guestsjudges[thirdjudge].getName()+" !";
+                break;
+            case 1:
+
+                performanceScreen.createImage(Ross.image);
+                secondjudge;
+                issame = true;
+
+                while(issame == true)
+                {
+                    secondjudge = randomNumber(0,guestsjudges.length-1);
+                    if(guestsjudges[secondjudge].getName()==guestsjudges[firstjudge].getName())
+                    {
+                        issame = true;
+                    }
+                    else
+                    {
+                        issame = false;
+                    }
+                }
+
+                performanceScreen.createImage(guestsjudges[firstjudge].image);
+                performanceScreen.createImage(guestsjudges[secondjudge].image);
+                judgetext += "Ross Matthews, "+guestsjudges[firstjudge].getName()+" and "+guestsjudges[secondjudge].getName()+" !";
+                break;
+            case 2:
+
+                performanceScreen.createImage(Carson.image);
+                issame = true;
+
+                while(issame == true)
+                {
+                    secondjudge = randomNumber(0,guestsjudges.length-1);
+                    if(guestsjudges[secondjudge].getName()==guestsjudges[firstjudge].getName())
+                    {
+                        issame = true;
+                    }
+                    else
+                    {
+                        issame = false;
+                    }
+                }
+                performanceScreen.createImage(guestsjudges[firstjudge].image);
+                performanceScreen.createImage(guestsjudges[secondjudge].image);
+                judgetext += "Carson Kressley, "+guestsjudges[firstjudge].getName()+" and "+guestsjudges[secondjudge].getName()+" !";            
+                break;
+            case 3:
+                performanceScreen.createImage(Ross.image);
+                performanceScreen.createImage(Carson.image);
+                console.log(firstjudge);
+                performanceScreen.createImage(guestsjudges[firstjudge].image);
+                judgetext += "Ross Matthews, Carson Kressley and "+guestsjudges[firstjudge].getName();;
+                break;
+        }
+    performanceScreen.createBold(judgetext);    
+
     performanceScreen.createHorizontalLine();
     performanceScreen.createBigText("Queens' performances...");
     let slay = currentCast.filter(function (queen) { return queen.performanceScore < 6; });
@@ -1576,7 +1785,8 @@ function newEpisode() {
 
             for (let j = 0; j < currentCast.length; j++) {
                 currentCast[i].AddRelation(currentCast[j]);
-            }   
+            } 
+            currentCast[i].UpdateAllRelations();  
         }
     }
     else {
@@ -5851,7 +6061,7 @@ class Relation {
     {
         this.queen = Queen;
         this.point = 0;
-        this.status = "Unknowed"
+        this.status = "Neutral"
     }
 
     ChangePoints(points)
@@ -5877,16 +6087,16 @@ class Relation {
     UpdateStatus()
     {
         switch(this.point){
-            case this.point<=5:
+            case this.point<=-2:
                 this.status = "Hostile";
                 break;
-            case this.point<=10:
+            case this.point<=-5:
                 this.status = "Ennemy";
                 break;
-            case this.point>=5:
+            case this.point>=2:
                 this.status = "Friendly";
                 break;
-            case this.point>=10:
+            case this.point>=5:
                 this.status = "Friend";
                 break;
             default:
@@ -5894,6 +6104,8 @@ class Relation {
         }
     }
 }
+
+
 
 class Queen {
     constructor(name, acting, comedy, dance, design, improv, runway, lipsync, image = "noimage", custom = false) {
@@ -5942,14 +6154,10 @@ class Queen {
         this.relationships.push(newRel);
     }
 
-    ModifyRelation(Queen, points) {
+    UpdateAllRelations(Queen, points) {
         for(let i = 0; i<this.relationships.length; i++)
         {
-            if(this.relationships[i].GetQueen().getName()==Queen)
-            {
-                this.relationships[i].ChangePoints(points);
-            }
-            this.relationships[i].UpdateStatus;
+            this.relationships[i].UpdateStatus();
         }
     }
 
@@ -5960,6 +6168,17 @@ class Queen {
             if(this.relationships[i].GetQueen().getName()==Queen)
             {
                 return(this.relationships[i]);
+            }
+        }
+    }
+
+    ChangeRelation(Queen, points)
+    {
+        for(let i = 0; i<this.relationships.length; i++)
+        {
+            if(this.relationships[i].GetQueen().getName()==Queen)
+            {
+                this.relationships[i].ChangePoints(points);
             }
         }
     }
