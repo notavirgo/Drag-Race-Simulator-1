@@ -1062,7 +1062,7 @@ function teamMaking() {
         }
         else
         {
-            t2 += " and "+team2[i].getName()+" are on Team 1.";
+            t2 += " and "+team2[i].getName()+" are on Team 2.";
         }
     }
     screen.createBold(t2);
