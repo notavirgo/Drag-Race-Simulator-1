@@ -306,6 +306,11 @@ class MiniChallenge {
                     screen.createImage(eliminatedCast[0].image);
                     screen.createBold(currentCast[who].getName()+" felt like this was "+eliminatedCast[0].getName()+" time to go.");
                 }
+                else  
+                {
+                    screen.createImage(currentCast[who].image);
+                    screen.createBold(currentCast[who].getName()+" is excited about today's challenge.");
+                }
                 break;
         }
     }
