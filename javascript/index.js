@@ -1,7 +1,7 @@
 "use strict";
 let readsbase=[
     ", how nice of you to save the oceans by injecting the plastic into yourself! And using the rest of the trash for your drag.",
-    ", look at how short is skirt! It is supposed to be the same size as your talent ?",
+    ", look at how short is this skirt! It is supposed to be the same size as your talent ?",
     ", these other girls are gonna say you have terrible makeup skills, you have no fashion sense, and you’re dumb as a rock. But they’re wrong! You don’t have terrible makeup skills.",
     ", if you are America’s sweetheart then America needs a heart transplant.",
     ", next time you death drop reverse that and drop dead.",
@@ -306,7 +306,7 @@ class MiniChallenge {
                     screen.createImage(eliminatedCast[0].image);
                     screen.createBold(currentCast[who].getName()+" felt like this was "+eliminatedCast[0].getName()+" time to go.");
                 }
-                else  
+                else
                 {
                     screen.createImage(currentCast[who].image);
                     screen.createBold(currentCast[who].getName()+" is excited about today's challenge.");
@@ -2025,7 +2025,14 @@ function newEpisode() {
             if(all_stars || lipsync_assassin)
             {
                 queensRemainingScreen.createBold("Coming back into the werk-room, it is : "+currentCast[i].getName()+".");
+                if(currentCast[i].getName()=="Eve 6000")
+                {
+                    queensRemainingScreen.createBold("\"Looks like I did have another trick up my sleeve, after all!\"");
+                }
+                else
+                {
                 queensRemainingScreen.createBold("\""+entrancelinesas[randomNumber(0,entrancelinesas.length-1)]+"\"");
+                }
                 if(randomNumber(0,10)>=8)
                 {
                     if(i!=0)
