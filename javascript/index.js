@@ -91,6 +91,26 @@ let entrancelineres = [
     "Oh wow.",
     "Oh."
 ];
+
+class Event{
+    constructor(Queen1, Queen2, TypeOfChallenge, Event)
+    {
+        this.firstqueen = Queen1;
+        this.secondqueen = Queen2;
+        this.challenge = TypeOfChallenge;
+        this.event = Event;
+    }
+
+    getEvent()
+    {
+        let arrayEvent = [];
+        arrayEvent.push(this.firstqueen);
+        arrayEvent.push(this.secondqueen);
+        arrayEvent.push(this.challenge);
+        arrayEvent.push(this.event);
+        return(arrayEvent);
+    }
+}
 //mini-challenge stuff:
 class MiniChallenge {
     generateDescription(screen) {
@@ -143,9 +163,10 @@ class MiniChallenge {
                 screen.createImage(currentCast[queenreaded].image);
                 screen.createBold(currentCast[i].getName()+", it is your turn.");
                 screen.createBold("\""+currentCast[queenreaded].getName()+reads[read]+"\"");
-                reads.splice(read,1);
+                reads.splice(read, 1);
             }
             screen.createHorizontalLine();
+            reads = readsbase;
         }
         else if (totalCastSize != 5 && currentCast.length == 5) {
             description.innerHTML = "Bring in the puppets! The queens will parody eachother using puppets!";
@@ -288,7 +309,7 @@ class MiniChallenge {
                 break;
 
             case 1:
-                if(eliminatedCast.length!=0 && currentCast[who].GetRelation(eliminatedCast[0].getName())>=2 && eliminatedCast[0].episodesOn==episodeCount-1)
+                if(eliminatedCast.length!=0 && (currentCast[who].GetRelation(eliminatedCast[0].getName())>1) && eliminatedCast[0].episodesOn==episodeCount-1)
                 {
                     screen.createImage(currentCast[who].image);
                     screen.createImage(eliminatedCast[0].image);
@@ -375,7 +396,7 @@ let Barbara = new Judge("Barbara Streisand","BarbabaS");
 let Celine = new Judge("Céline Dion","Celine");
 let Janet = new Judge("Janet Jackson","Janet");
 let Charli = new Judge("Charli XCX","Charli");
-let Katy = new Judge("Katy Perrie","Katy");
+let Katy = new Judge("Katy Perry","Katy");
 let VictoriaB = new Judge("Victoria Beckham","Victoria");
 let Melanie = new Judge("Melanie Chrisholm","MelanieC");
 let MelB = new Judge("Melanie Brown","MelB");
@@ -1131,112 +1152,7 @@ function talentshow() {
 }
 //performance:
 function queensPerformances() {
-    let performanceScreen = new Scene();
-    performanceScreen.createHorizontalLine();
-    performanceScreen.createBigText("This week judging panel will be...");
-
-        performanceScreen.createImage(Ru.image);
-        performanceScreen.createImage(Michelle.image);
-
-        let judgetext = "Rupaul Charles, Michelle Visage, ";
-
-        let carsonorross = randomNumber(1,3);
-
-        let firstjudge = randomNumber(0,guestsjudges.length-1);
-        let secondjudge;
-        let thirdjudge;
-        let issame;
-
-        switch(carsonorross){
-            case 0:
-                issame = true;
-
-                while(issame == true)
-                {
-                    secondjudge = randomNumber(0,guestsjudges.length-1);
-                    if(guestsjudges[secondjudge].getName()==guestsjudges[firstjudge].getName())
-                    {
-                        issame = true;
-                    }
-                    else
-                    {
-                        issame = false;
-                    }
-                }
-
-                let issamethird = true;
-                while(issamethird == true)
-                {
-                    thirdjudge = randomNumber(0,guestsjudges.length-1);
-                    if(guestsjudges[thirdjudge].getName()==guestsjudges[firstjudge].getName() || guestsjudges[thirdjudge].getName()==guestsjudges[secondjudge].getName())
-                    {
-                        issamethird = true;
-                    }
-                    else
-                    {
-                        issamethird = false;
-                    }
-                }
-
-                performanceScreen.createImage(guestsjudges[firstjudge].image);
-                performanceScreen.createImage(guestsjudges[secondjudge].image);
-                performanceScreen.createImage(guestsjudges[thirdjudge].image);
-                judgetext += guestsjudges[firstjudge].getName()+", "+guestsjudges[secondjudge].getName()+" and "+guestsjudges[thirdjudge].getName()+" !";
-                break;
-            case 1:
-
-                performanceScreen.createImage(Ross.image);
-                secondjudge;
-                issame = true;
-
-                while(issame == true)
-                {
-                    secondjudge = randomNumber(0,guestsjudges.length-1);
-                    if(guestsjudges[secondjudge].getName()==guestsjudges[firstjudge].getName())
-                    {
-                        issame = true;
-                    }
-                    else
-                    {
-                        issame = false;
-                    }
-                }
-
-                performanceScreen.createImage(guestsjudges[firstjudge].image);
-                performanceScreen.createImage(guestsjudges[secondjudge].image);
-                judgetext += "Ross Matthews, "+guestsjudges[firstjudge].getName()+" and "+guestsjudges[secondjudge].getName()+" !";
-                break;
-            case 2:
-
-                performanceScreen.createImage(Carson.image);
-                issame = true;
-
-                while(issame == true)
-                {
-                    secondjudge = randomNumber(0,guestsjudges.length-1);
-                    if(guestsjudges[secondjudge].getName()==guestsjudges[firstjudge].getName())
-                    {
-                        issame = true;
-                    }
-                    else
-                    {
-                        issame = false;
-                    }
-                }
-                performanceScreen.createImage(guestsjudges[firstjudge].image);
-                performanceScreen.createImage(guestsjudges[secondjudge].image);
-                judgetext += "Carson Kressley, "+guestsjudges[firstjudge].getName()+" and "+guestsjudges[secondjudge].getName()+" !";            
-                break;
-            case 3:
-                performanceScreen.createImage(Ross.image);
-                performanceScreen.createImage(Carson.image);
-                console.log(firstjudge);
-                performanceScreen.createImage(guestsjudges[firstjudge].image);
-                judgetext += "Ross Matthews, Carson Kressley and "+guestsjudges[firstjudge].getName();;
-                break;
-        }
-    performanceScreen.createBold(judgetext);    
-
+    let performanceScreen = new Scene(); 
     performanceScreen.createHorizontalLine();
     performanceScreen.createBigText("Queens' performances...");
     let slay = currentCast.filter(function (queen) { return queen.performanceScore < 6; });
@@ -1983,6 +1899,7 @@ let safeQueens = [];
 let topQueens = [];
 let bottomQueens = [];
 let top2 = [];
+let events = [];
 let doubleShantay = false;
 let doubleSashay = false;
 let episodeChallenges = [];
@@ -2000,14 +1917,82 @@ let firstPremiere = false;
 let secondPremiere = false;
 let uk3Premiere = false;
 let s9Premiere = false;
+let judgetext = "Rupaul Charles, Michelle Visage, ";
+
+let carsonorross = randomNumber(1,3);
+
+let judgingpanel = [];
+
+let firstjudge = randomNumber(0,guestsjudges.length-1);
+let secondjudge;
+let thirdjudge;
+let issame;
 //challenge seasons
 let sweatshop = false;
 let chaos = false;
 function newEpisode() {
+        judgingpanel = [];
+        judgetext = "";
+        judgingpanel.push(Ru);
+        judgingpanel.push(Michelle);
+        carsonorross = randomNumber(1,3);
+        firstjudge = randomNumber(0,guestsjudges.length-1);
+        judgetext = "Rupaul Charles, Michelle Visage, ";
+
+        switch(carsonorross){
+            case 1:
+                secondjudge;
+                issame = true;
+                while(issame == true)
+                {
+                    secondjudge = randomNumber(0,guestsjudges.length-1);
+                    if(guestsjudges[secondjudge].getName()==guestsjudges[firstjudge].getName())
+                    {
+                        issame = true;
+                    }
+                    else
+                    {
+                        issame = false;
+                    }
+                }
+                judgingpanel.push(Ross);
+                judgingpanel.push(guestsjudges[firstjudge]);
+                judgingpanel.push(guestsjudges[secondjudge]);
+                judgetext += "Ross Matthews, "+guestsjudges[firstjudge].getName()+" and "+guestsjudges[secondjudge].getName()+" !";
+                break;
+            case 2:
+                issame = true;
+                while(issame == true)
+                {
+                    secondjudge = randomNumber(0,guestsjudges.length-1);
+                    if(guestsjudges[secondjudge].getName()==guestsjudges[firstjudge].getName())
+                    {
+                        issame = true;
+                    }
+                    else
+                    {
+                        issame = false;
+                    }
+                }
+                judgingpanel.push(Carson);
+                judgingpanel.push(guestsjudges[firstjudge]);
+                judgingpanel.push(guestsjudges[secondjudge]);
+                judgetext += "Carson Kressley, "+guestsjudges[firstjudge].getName()+" and "+guestsjudges[secondjudge].getName()+" !";            
+                break;
+            case 3:
+                judgingpanel.push(Ross);
+                judgingpanel.push(Carson);
+                judgingpanel.push(guestsjudges[firstjudge]);
+                judgetext += "Ross Matthews, Carson Kressley and "+guestsjudges[firstjudge].getName();;
+                break;
+        }
+
+
     safeQueens = [];
     topQueens = [];
     bottomQueens = [];
     top2 = [];
+    events = [];
     episodeCount++;
     let queensRemainingScreen = new Scene();
     if (s9Premiere && episodeCount == 1) {
@@ -2031,7 +2016,7 @@ function newEpisode() {
                 }
                 else
                 {
-                queensRemainingScreen.createBold("\""+entrancelinesas[randomNumber(0,entrancelinesas.length-1)]+"\"");
+                    queensRemainingScreen.createBold("\""+entrancelinesas[randomNumber(0,entrancelinesas.length-1)]+"\"");
                 }
                 if(randomNumber(0,10)>=8)
                 {
@@ -2184,15 +2169,15 @@ function newEpisode() {
                     }
                 }
             }
-
+            currentCast[i].ResetRelations();
             for (let j = 0; j < currentCast.length; j++) {
                 currentCast[i].AddRelation(currentCast[j]);
                 if(currentCast[i].getFirstSeason() == currentCast[j].getFirstSeason())
                 {
-                    if(currentCast[i].GetRelation(currentCast[j])!=2)
+                    if(currentCast[i].GetRelation(currentCast[j])==0)
                     {
-                        currentCast[i].ChangeRelation(currentCast[j].getName(),2);
-                        currentCast[j].ChangeRelation(currentCast[i].getName(),2);
+                        currentCast[i].ChangeRelation(currentCast[j].getName(),1);
+                        currentCast[j].ChangeRelation(currentCast[i].getName(),1);
                     }
                 }
             } 
@@ -2223,20 +2208,47 @@ function newEpisode() {
     else
         queensRemainingScreen.createButton("Proceed", "finale()");
     //add an empty placement on eliminated queen's track records
-    if( (currentCast.length == 4 && (top4 || ukvstwFinale)) || (currentCast.length == 3 && top3) || (currentCast.length == 4 && (all_stars || lipsync_assassin)) )
+    if( (currentCast.length == 4 && (top4 || ukvstwFinale)) || (currentCast.length == 3 && top3) || (currentCast.length == 4 && (all_stars || lipsync_assassin)))
     {
-        let missc = randomNumber(0,eliminatedCast.length-1);
-        for (let i = 0; i < eliminatedCast.length; i++)
+        if(all_stars || lipsync_assassin)
         {
-            if(missc == i)
+            let missrobbed = eliminatedCast[eliminatedCast.length-1];
+            for (let i = 0; i < eliminatedCast.length-1; i++)
             {
-                eliminatedCast[i].addToTrackRecord('MISS CONGENIALTY');
+                if((missrobbed.ppe / (missrobbed.episodesOn)).toFixed(2) <= (eliminatedCast[i].ppe / (eliminatedCast[i].episodesOn)).toFixed(2))
+                {
+                    missrobbed = eliminatedCast[i];
+                }
             }
-            else
+
+            for (let q = 0; q < eliminatedCast.length; q++)
             {
-                eliminatedCast[i].addToTrackRecord('GUEST');
+                if(missrobbed.getName() == eliminatedCast[q].getName())
+                {
+                    eliminatedCast[q].addToTrackRecord('MISS ROBBED');
+                }
+                else
+                {
+                    eliminatedCast[q].addToTrackRecord('GUEST');
+                }
             }
         }
+        else
+        {
+            let missc = randomNumber(0,eliminatedCast.length-1);
+            for (let i = 0; i < eliminatedCast.length; i++)
+            {
+                if(missc == i)
+                {
+                    eliminatedCast[i].addToTrackRecord('MISS CONGENIALITY');
+                }
+                else
+                {
+                    eliminatedCast[i].addToTrackRecord('GUEST');
+                }
+            }
+        }
+
     }
     else
     {
@@ -2882,6 +2894,8 @@ function canadaS2Finale() {
     screen.createBold(secondLS[0].getName() + " vs. " + secondLS[1].getName());
     episodeChallenges.push("Lipsync For The Finale");
     screen.createButton("Proceed", "canadaS2LipSyncs()");
+
+   
 }
 function canadaS2LipSyncs() {
     let screen = new Scene();
@@ -2971,8 +2985,19 @@ function canadaS2LipSyncs() {
         }
     }
     episodeCount++;
-    for (let i = 0; i < eliminatedCast.length; i++)
-        eliminatedCast[i].addToTrackRecord('');
+
+        let missc = randomNumber(0,eliminatedCast.length-1);
+        for (let i = 0; i < eliminatedCast.length; i++)
+        {
+            if(missc == i)
+            {
+                eliminatedCast[i].addToTrackRecord('MISS CONGENIALITY');
+            }
+            else
+            {
+                eliminatedCast[i].addToTrackRecord('GUEST');
+            }
+        }
     screen.createButton("Proceed", "finale()");
 }
 function contestantProgress() {
@@ -3178,8 +3203,11 @@ function contestantProgress() {
             else if (placement.innerHTML == "GUEST") {
                 placement.setAttribute("style", "background-color: grey;");
             }
-            else if (placement.innerHTML == "MISS CONGENIALTY") {
+            else if (placement.innerHTML == "MISS CONGENIALITY") {
                 placement.setAttribute("style", "background-color: #40f5f5;");
+            }
+            else if (placement.innerHTML == "MISS ROBBED") {
+                placement.setAttribute("style", "background-color: #ff6600;");
             }
             else if (placement.innerHTML == "undefined") {
                 placement.setAttribute("style", "font-weight: bold; background-color: lightgray;");
@@ -3346,8 +3374,11 @@ function contestantProgress() {
                 }else if (placement.innerHTML == "GUEST") {
                     placement.setAttribute("style", "background-color: grey;");
                 }
-                else if (placement.innerHTML == "MISS CONGENIALTY") {
+                else if (placement.innerHTML == "MISS CONGENIALITY") {
                     placement.setAttribute("style", "background-color: #40f5f5;");
+                }
+                else if (placement.innerHTML == "MISS ROBBED") {
+                    placement.setAttribute("style", "background-color: #ff6600;");
                 }
                 else if (placement.innerHTML == "undefined") {
                     placement.setAttribute("style", "font-weight: bold; background-color: lightgray;");
@@ -3519,8 +3550,11 @@ function contestantProgress() {
             else if (placement.innerHTML == "GUEST") {
                 placement.setAttribute("style", "background-color: lightgray;");
             }
-            else if (placement.innerHTML == "MISS CONGENIALTY") {
+            else if (placement.innerHTML == "MISS CONGENIALITY") {
                 placement.setAttribute("style", "background-color: #40f5f5;");
+            }
+            else if (placement.innerHTML == "MISS ROBBED") {
+                placement.setAttribute("style", "background-color: #ff6600;");
             }
             else if (placement.innerHTML == "undefined") {
                 placement.setAttribute("style", "font-weight: bold; background-color: lightgray;");
@@ -4463,7 +4497,7 @@ function judging() {
         if (top3 || top4)
             winAndBtm2();
         else if (all_stars)
-            top2AndBtm();
+            judgingScreen();
         else if (lipsync_assassin)
             topAndBtm();
     }
@@ -4481,7 +4515,7 @@ function judging() {
         if (top3 || top4)
             winAndBtm2();
         else if (all_stars)
-            top2AndBtm();
+            judgingScreen();
         else if (lipsync_assassin)
             topAndBtm();
     }
@@ -4495,7 +4529,7 @@ function judging() {
         if (top3 || top4)
             winAndBtm2();
         else if (all_stars)
-            top2AndBtm();
+            judgingScreen();
         else if (lipsync_assassin)
             topAndBtm();
     }
@@ -5186,9 +5220,11 @@ function judgingScreen() {
     judgingScreen.createHorizontalLine();
     judgingScreen.createParagraph("", "safeQueens");
     let safeQueens = document.querySelector("p#safeQueens");
+    let sq = 0;
     //check if the queen is in the top or in the bottom, and if not put her as safe:
     for (let i = 0; i < currentCast.length; i++)
         if (topQueens.indexOf(currentCast[i]) == -1 && bottomQueens.indexOf(currentCast[i]) == -1) {
+            sq++;
             safeQueens.innerHTML += currentCast[i].getName() + ", ";
             if (team == false)
                 currentCast[i].addToTrackRecord("SAFE");
@@ -5201,21 +5237,25 @@ function judgingScreen() {
                 currentCast[i].QueenB.ppe += 3;
             }
         }
-    if (isTeamChallenge && currentCast.length <= 8) {
-        safeQueens.innerHTML += "";
-    } else {
-        safeQueens.innerHTML += "you are safe.";
+    if(sq!=0)
+    {
+        
+        if (isTeamChallenge && currentCast.length <= 8) {
+            safeQueens.innerHTML += "";
+        } else {
+            safeQueens.innerHTML += "you are safe.";
+        }
     }
-    if (uk3Premiere && episodeCount == 1)
-        judgingScreen.createButton("Proceed", "uk3PremiereJudging()");
-    else if (top3 || top4)
-        judgingScreen.createButton("Proceed", "winAndBtm2()");
-    else if (all_stars)
-        judgingScreen.createButton("Proceed", "top2AndBtm()");
-    else if (lipsync_assassin)
-        judgingScreen.createButton("Proceed", "topAndBtm()");
-    else if (team)
-        judgingScreen.createButton("Proceed", "teamWinAndBtm2()");
+    if(sq==0)
+    {
+        judgingScreen.createButton("Proceed","Critiques()");
+        sq = 0;
+    }
+    else
+    {
+        judgingScreen.createButton("Proceed","UntuckedSafeQueens()");
+        sq = 0;
+    }
 }
 let thirdqueen = false;
 function winAndBtm2() {
@@ -5514,44 +5554,7 @@ function top2AndBtm() {
         bottomQueens.splice(0, 1);
     } */
     screen.createHorizontalLine();
-    screen.createBigText("After deliberation...");
-    for (let i = 0; i < top2.length; i++) {
-        if (randomNumber(0, 100) <= 45 && currentCast.length <= totalCastSize - 2)
-            top2[i].lipstick = bottomQueens.sort((a, b) => b.unfavoritism - a.unfavoritism)[0];
-        else
-            top2[i].lipstick = bottomQueens[randomNumber(0, bottomQueens.length - 1)];
-        screen.createImage(top2[i].image, "cyan");
-        screen.createImage(top2[i].lipstick.image, "red");
-        screen.createBold(top2[i].getName() + " chose " + top2[i].lipstick.getName() + "'s lipstick!", "winV", "winVP");
-    }
-    if (top2[0].lipstick == top2[1].lipstick){
-        let imageVoted = document.querySelectorAll("img[src='" + top2[0].lipstick.image +"']")[1];
-        imageVoted.setAttribute("hidden", "hidden");
-        let imageVotedd = document.querySelectorAll("img[src='" + top2[1].lipstick.image +"']")[2];
-        imageVotedd.setAttribute("hidden", "hidden");
-        mismovoto = true;
-    }else{
-        let imageVoted = document.querySelectorAll("img[src='" + top2[0].lipstick.image +"']")[1];
-        imageVoted.setAttribute("hidden", "hidden");
-        let imageVotedd = document.querySelectorAll("img[src='" + top2[1].lipstick.image +"']")[1];
-        imageVotedd.setAttribute("hidden", "hidden");
-        mismovoto = false;
-    }
-    let winV = document.querySelectorAll("p#winVP");
-    winV[0].setAttribute("hidden", "hidden");
-    winV[1].setAttribute("hidden", "hidden");
-    let main = document.querySelector("div#MainBlock");
-    let div = document.createElement("div");
-    div.setAttribute("id", "votes");
-    div.setAttribute("hidden", "hidden");
-    for (let i = 0; i < winV.length; i++){
-        div.appendChild(winV[i]);
-    }
-    main.appendChild(div);
-    let br = document.createElement("br");
-    main.appendChild(br);
-    screen.createButton("Show votes", "showvotes()", "showvotes");
-    screen.createButton("Proceed", "asLipSync()");
+    screen.createButton("Proceed", "ASUntucked()");
 }
 function topAndBtm() {
     let screen = new Scene();
@@ -5610,67 +5613,7 @@ function topAndBtm() {
     for (let i = 0; i < bottomQueens.length; i++)
         btms.innerHTML += `${bottomQueens[i].getName()}, `;
     btms.innerHTML += ", you're up for elimination.";
-    screen.createHorizontalLine();
-    screen.createBigText("After deliberation...");
-    if (randomNumber(0, 100) <= 45 && currentCast.length <= totalCastSize - 2)
-        top2[0].lipstick = bottomQueens.sort((a, b) => b.unfavoritism - a.unfavoritism)[0];
-    else
-        top2[0].lipstick = bottomQueens[randomNumber(0, bottomQueens.length - 1)];
-    screen.createImage(top2[0].image, "cyan");
-    screen.createImage(top2[0].lipstick.image, "red");
-    screen.createBold(top2[0].getName() + " chose " + top2[0].lipstick.getName() + "'s lipstick!", "winV", "winVP");
-    if (currentCast.length <= 5){
-        let imageVoted = document.querySelectorAll("img[src='" + top2[0].lipstick.image +"']")[1];
-        imageVoted.setAttribute("hidden", "hidden");
-    }else{
-        let imageVoted = document.querySelectorAll("img[src='" + top2[0].lipstick.image +"']")[2];
-        imageVoted.setAttribute("hidden", "hidden");
-    }
-    let winV = document.querySelector("p#winVP");
-    winV.setAttribute("hidden", "hidden");
-    screen.createHorizontalLine();
-    let main = document.querySelector("div#MainBlock");
-    let div = document.createElement("div");
-    div.setAttribute("id", "votes");
-    div.setAttribute("hidden", "hidden");
-    screen.createBigText("The queens vote...");
-    for (let i = 0; i < currentCast.length; i++) {
-        if (top2.indexOf(currentCast[i]) == -1) {
-            if (randomNumber(0, 100) <= 15 && currentCast.length > 6 && bottomQueens.sort((a, b) => b.unfavoritism - a.unfavoritism)[0] != currentCast[i] && currentCast.length <= totalCastSize - 2) {
-                currentCast[i].lipstick = bottomQueens.sort((a, b) => b.unfavoritism - a.unfavoritism)[0];
-                while (currentCast[i].lipstick.getName() == currentCast[i].getName()) {
-                    currentCast[i].lipstick = bottomQueens[randomNumber(0, bottomQueens.length - 1)];
-                }
-            }
-            else {
-                currentCast[i].lipstick = bottomQueens[randomNumber(0, bottomQueens.length - 1)];
-                while (currentCast[i].lipstick.getName() == currentCast[i].getName()) {
-                    currentCast[i].lipstick = bottomQueens[randomNumber(0, bottomQueens.length - 1)];
-                }
-            }
-            screen.createBold(currentCast[i].getName() + " voted for " + currentCast[i].lipstick.getName() + "!", "votes", "votesP");
-            currentCast[i].lipstick.votes++;
-        }
-    }
-    let votesToDiv = document.querySelectorAll("p#votesP");
-    for (let i = 0; i < votesToDiv.length; i++){
-        div.appendChild(votesToDiv[i]);
-    }
-    main.appendChild(div);
-    screen.createButton("Show votes", "showvotes()", "showvotes");
-    screen.createHorizontalLine();
-    for (let i = 0; i < bottomQueens.length; i++) {
-        screen.createImage(bottomQueens[i].image, "red");
-        screen.createBold(bottomQueens[i].getName() + ": " + bottomQueens[i].votes.toString() + " votes", "total", "totalP");
-    }
-    let resultVotes = document.querySelectorAll("p#totalP");
-    for (let i = 0; i < resultVotes.length; i++){
-        resultVotes[i].setAttribute("hidden", "hidden");
-    }
-    bottomQueens.sort((a, b) => b.votes - a.votes);
-    let br = document.createElement("br");
-    main.appendChild(br);
-    screen.createButton("Proceed", "lsaLipSync()");
+   screen.createButton("Proceed","ASUntucked()")
 }
 let mismovoto = false;
 function showvotes() {
@@ -6058,12 +6001,127 @@ function lipSync() {
             }
         }
     }
+
     if ((s6Premiere || s12Premiere || porkchopPremiere || s14Premiere) == true && premiereCounter < 3)
+    {
+        if((s6Premiere || s14Premiere) == true && premiereCounter<3)
         screen.createButton("Proceed", "doublePremiere()");
-    else if (CheckForReturning() == true)
-        screen.createButton("Proceed", "returningQueenScreen()");
+    }
+    else 
+    {
+        if(eliminatedCast[0].episodesOn==episodeChallenges.length)
+            screen.createButton("Proceed","Notes()");
+        else
+        {
+            if (CheckForReturning() == true)
+            screen.createButton("Proceed", "returningQueenScreen()");
+            else
+            screen.createButton("Proceed", "newEpisode()");
+        }
+    }
+}
+function Notes()
+{
+    let notes =[
+        ", my dear friend, I cannot wait for the world to fall in love with you, like you did with us. ",
+        ", I cannot wait to meet up outside of here again! ",
+        ", can't wait to be friends! xoxo ",
+        ", you are amazing never forget that, ",
+        ", I adore you, I love your energy. And everything that comes with it, ",
+        ", I'm sorry you were sent home, but you have been a blessing to us. Love you, ",
+        ", I am forever grateful that I met you, ",
+        ", I love you from all of my heart. Have fun back home, ",
+        ", You are so fierce, i loved you from the beginning! ",
+        ", GIRL! You are the shit, never let someone else tell you different! ",
+        ", I'm glad you went home! JK! (PS: I love you so much) "
+    ];
+    let randomleave =[
+        "This isn't my last time here.",
+        "Well time to go now...",
+        "It was fun while it lasted.",
+        "Oh this y'all ? It's just me leaving.",
+        "Goodbye, everyone!",
+        "I love y'all."
+    ];
+    let screen = new Scene();
+    screen.clean();
+    if(eliminatedCast.length != 1 && (eliminatedCast[0].episodesOn == eliminatedCast[1].episodesOn))
+    {
+        screen.createHeader("Back in the workroom...");
+            screen.createBigText(eliminatedCast[0].getName()+" & "+eliminatedCast[1].getName()+" comes back into the workroom.");
+        for(let i = 0; i<=1; i++)
+        {
+            let howmanynotes = randomNumber(0,currentCast.length-2);
+            console.log(howmanynotes);
+            let queensnote = [];
+            for(let q = 0;q<currentCast.length;q++)
+                queensnote.push(currentCast[q]);
+            if(howmanynotes!=0)
+                screen.createBold("Some queens left some notes for "+eliminatedCast[i].getName()+".");
+            for(let note = 0; note<howmanynotes; note++)
+            {
+                console.log(queensnote.length);
+                let randnotes = randomNumber(0,notes.length-1);
+                let whoqueen = randomNumber(0,queensnote.length-1);
+                screen.createImage(eliminatedCast[0].image,'#ff4f2b');
+                screen.createImage(queensnote[whoqueen].image);
+                screen.createBold(eliminatedCast[0].getName()+notes[randnotes]+queensnote[whoqueen].getName()+".");
+                queensnote.splice(whoqueen,1);
+            }
+            if(howmanynotes==0)
+            {
+                screen.createBold("No one left any notes for "+eliminatedCast[i].getName()+".");
+            }
+
+            
+        }
+        screen.createHorizontalLine();
+        screen.createImageBW(eliminatedCast[0].image);
+        screen.createBold(randomleave[randomNumber(0,randomleave.length-1)]);
+        screen.createImageBW(eliminatedCast[1].image);
+        screen.createBold(randomleave[randomNumber(0,randomleave.length-1)]);
+        screen.createBigTextColored(currentCast.length+" queens remain...","black");
+
+        if (CheckForReturning() == true)
+            screen.createButton("Proceed", "returningQueenScreen()");
+        else
+            screen.createButton("Proceed", "newEpisode()");
+    }
     else
-        screen.createButton("Proceed", "newEpisode()");
+    {
+        screen.createHeader("Back in the workroom...");
+        screen.createBigText(eliminatedCast[0].getName()+" comes back into the workroom.");
+        let howmanynotes = randomNumber(0,currentCast.length-2);
+        console.log(howmanynotes);
+        let queensnote = [];
+        for(let q = 0;q<currentCast.length;q++)
+            queensnote.push(currentCast[q]);
+        if(howmanynotes!=0)
+            screen.createBold("Some queens left some notes for "+eliminatedCast[0].getName()+".");
+        for(let note = 0; note<howmanynotes; note++)
+        {
+            console.log(queensnote.length);
+            let randnotes = randomNumber(0,notes.length-1);
+            let whoqueen = randomNumber(0,queensnote.length-1);
+            screen.createImage(eliminatedCast[0].image,'#ff4f2b');
+            screen.createImage(queensnote[whoqueen].image);
+            screen.createBold(eliminatedCast[0].getName()+notes[randnotes]+queensnote[whoqueen].getName()+".");
+            queensnote.splice(whoqueen,1);
+        }
+        if(howmanynotes==0)
+        {
+            screen.createBold("No one left any notes for "+eliminatedCast[0].getName()+".");
+        }
+        screen.createHorizontalLine();
+        screen.createImageBW(eliminatedCast[0].image);
+        screen.createBold(randomleave[randomNumber(0,randomleave.length-1)]);
+
+        screen.createBigTextColored(currentCast.length+" queens remain...","black");
+        if (CheckForReturning() == true)
+            screen.createButton("Proceed", "returningQueenScreen()");
+        else
+            screen.createButton("Proceed", "newEpisode()");
+    }
 }
 function teamLipSync() {
     let screen = new Scene();
@@ -6559,6 +6617,7 @@ class Queen {
     constructor(name, acting, comedy, dance, design, improv, runway, lipsync, image = "noimage", custom = false, original) {
         this.trackRecord = [];
         this.relationships = [];
+        this.alliances = [];
         this.runwayScore = 0;
         this.lipsyncScore = 0;
         this.performanceScore = 0;
@@ -6610,6 +6669,11 @@ class Queen {
         }
     }
 
+    ResetRelations()
+    {
+        this.relationships = [];
+    }
+
     GetRelation(Queen)
     {
         for(let i = 0; i<this.relationships.length; i++)
@@ -6630,6 +6694,29 @@ class Queen {
                 this.relationships[i].ChangePoints(points);
             }
         }
+    }
+
+    AddAlliance(Queen)
+    {
+        this.alliances.push(Queen);
+    }
+
+    IsAlliedTo(Queen)
+    {
+        let found = false;
+        for(let a = 0; a<this.alliances.length; a++)
+        {
+            if(this.alliances[a]==Queen)
+            {
+                found = true;
+            }
+        }
+        return(found);
+    }
+
+    RemoveAlliance(Queen)
+    {
+        this.alliances.slice(this.alliances.indexOf(Queen),1);
     }
 
     getFirstSeason() {
@@ -6688,6 +6775,1420 @@ class Queen {
     addToTrackRecord(placement) {
         this.trackRecord.push(placement);
     }
+}
+
+
+function GenerateSafeUntuckedEvent(SafeQueens, Untucked)
+{
+    if(SafeQueens.length!=1)
+    {
+        let randomqueen = randomNumber(0,SafeQueens.length-1);
+        let same = true;
+        let ssame = true;
+        let secondqueen = randomNumber(0,SafeQueens.length-1);
+        while(same==true)
+        {
+            secondqueen = randomNumber(0,SafeQueens.length-1);
+            if(secondqueen == randomqueen)
+            {
+                same = true;
+            }
+            else
+            {
+                same = false;
+            }
+        }
+
+        let threequeen = randomNumber(0,SafeQueens.length-1);
+        if(SafeQueens.length>=3)
+        {
+            while(ssame==true)
+            {
+                threequeen = randomNumber(0,SafeQueens.length-1);
+                    
+                if(threequeen == randomqueen || threequeen == secondqueen)
+                {
+                    ssame = true;
+                }
+                else
+                {
+                    ssame = false;
+                }
+            }
+        }
+        switch(randomNumber(0,5)){
+            case 0:
+                Untucked.createImage(SafeQueens[randomqueen].image);
+                Untucked.createImage(SafeQueens[secondqueen].image);
+                if(SafeQueens[randomqueen].GetRelation(SafeQueens[secondqueen].getName())<=-2)
+                {
+                    Untucked.createBold(SafeQueens[randomqueen].getName()+" is getting into a fight with "+SafeQueens[secondqueen].getName()+"!");
+                    Untucked.createBold(SafeQueens[secondqueen].getName()+" say that "+SafeQueens[randomqueen].getName()+" should have been out the competition the first week.");
+                    currentCast[currentCast.indexOf(SafeQueens[randomqueen])].ChangeRelation(SafeQueens[secondqueen].getName(),-3);
+                    currentCast[currentCast.indexOf(SafeQueens[secondqueen])].ChangeRelation(SafeQueens[randomqueen].getName(),-3);
+                }
+                else
+                {
+                    Untucked.createBold(SafeQueens[randomqueen].getName()+" compliment "+SafeQueens[secondqueen].getName()+" on their runway tonight.");
+                    currentCast[currentCast.indexOf(SafeQueens[randomqueen])].ChangeRelation(SafeQueens[secondqueen].getName(),1);
+                    currentCast[currentCast.indexOf(SafeQueens[secondqueen])].ChangeRelation(SafeQueens[randomqueen].getName(),1);
+                }
+                break;
+
+            case 1:
+                Untucked.createImage(SafeQueens[randomqueen].image);
+                Untucked.createImage(SafeQueens[secondqueen].image);
+                Untucked.createBold(SafeQueens[randomqueen].getName()+" has a laugh with "+SafeQueens[secondqueen].getName()+"!");
+
+                currentCast[currentCast.indexOf(SafeQueens[randomqueen])].ChangeRelation(SafeQueens[secondqueen].getName(),1);
+                currentCast[currentCast.indexOf(SafeQueens[secondqueen])].ChangeRelation(SafeQueens[randomqueen].getName(),1);
+                break;
+
+            case 2:
+                Untucked.createImage(SafeQueens[randomqueen].image);
+                Untucked.createBold(SafeQueens[randomqueen].getName()+" is talking about they felt like she felt they was going to be in the top.");
+                break;
+
+            case 3:
+                Untucked.createImage(SafeQueens[randomqueen].image);
+                Untucked.createImage(SafeQueens[secondqueen].image);
+                Untucked.createBold(SafeQueens[randomqueen].getName()+" felt like something "+SafeQueens[secondqueen].getName()+" said was rude towards them.");
+                if(randomNumber(0,1)==0)
+                {
+                    Untucked.createBold(SafeQueens[secondqueen].getName()+" say that they shouldn't be mad, because it was nothing and that "+SafeQueens[randomqueen].getName()+" is just overeacting.");
+                    currentCast[currentCast.indexOf(SafeQueens[randomqueen])].ChangeRelation(SafeQueens[secondqueen].getName(),-1);
+                    currentCast[currentCast.indexOf(SafeQueens[secondqueen])].ChangeRelation(SafeQueens[randomqueen].getName(),-1);
+                }
+                else
+                {
+                    Untucked.createBold(SafeQueens[secondqueen].getName()+" say to "+SafeQueens[randomqueen].getName()+", that they did not mean to be rude, and apologize if it came across that way.");
+                }
+                break;
+            case 4:
+                Untucked.createImage(SafeQueens[randomqueen].image);
+                if(SafeQueens[randomqueen].trackRecord[SafeQueens[randomqueen].trackRecord.length-1]== "BTM2" || SafeQueens[randomqueen].trackRecord[SafeQueens[randomqueen].trackRecord.length-1]== "BTM3" || SafeQueens[randomqueen].trackRecord[SafeQueens[randomqueen].trackRecord.length-1]== "BTM4" || SafeQueens[randomqueen].trackRecord[SafeQueens[randomqueen].trackRecord.length-1]== "BTM5" || SafeQueens[randomqueen].trackRecord[SafeQueens[randomqueen].trackRecord.length-1]== "BTM6")
+                {
+                    Untucked.createBold(SafeQueens[randomqueen].getName()+" say that they are happy being safe, after being in the bottom last week.");
+                }
+                else
+                {
+                    Untucked.createBold(SafeQueens[randomqueen].getName()+" say that they wanted to be in the top, but is happy that they are not in bottom.");
+                }
+                break;
+
+            case 5:
+                Untucked.createImage(SafeQueens[randomqueen].image);
+                Untucked.createImage(SafeQueens[secondqueen].image);
+                if(SafeQueens.length>=3)
+                {
+                    Untucked.createImage(SafeQueens[threequeen].image);
+                }
+                Untucked.createBold(SafeQueens[randomqueen].getName()+" ask the other queens who do they feel like is in the bottom.");
+                let tqueen = randomNumber(0,bottomQueens.length-1);
+                let othertqueen;
+                let istroublesame = true;
+                if(SafeQueens.length>=3)
+                {
+                    while(istroublesame==true)
+                    {
+                        othertqueen = randomNumber(0,bottomQueens.length-1);
+                        if(othertqueen == tqueen)
+                        {
+                            istroublesame = true;
+                        }
+                        else
+                        {
+                            istroublesame = false;
+                        }
+                    }
+                }
+
+                Untucked.createBold(SafeQueens[secondqueen].getName()+" say that they felt like "+bottomQueens[tqueen].getName()+"'s performance was not the best, and that they might be in trouble.");
+                if(SafeQueens.length>3)
+                {
+                    if(randomNumber(0,1)==0)
+                    {
+                        Untucked.createBold(SafeQueens[threequeen].getName()+" say that they agree and that indeed "+bottomQueens[tqueen].getName()+" might be in trouble.");
+                    }
+                    else
+                    {
+                        Untucked.createBold(SafeQueens[threequeen].getName()+" say they don't necessarily "+bottomQueens[othertqueen].getName()+" might be in trouble too.");
+                    }
+                }
+                break;
+        }
+    }
+    else
+    {
+    
+    }
+}
+
+function GenerateUntuckedEvent(Queens, Untucked)
+{
+        let randomqueen = randomNumber(0,Queens.length-1);
+        let same = true;
+        let ssame = true;
+        let secondqueen = randomNumber(0,Queens.length-1);
+        while(same==true)
+        {
+            secondqueen = randomNumber(0,Queens.length-1);
+            if(secondqueen == randomqueen)
+            {
+                same = true;
+            }
+            else
+            {
+                same = false;
+            }
+        }
+
+        let threequeen = randomNumber(0,Queens.length-1);
+        if(Queens.length>=3)
+        {
+            while(ssame==true)
+            {
+                threequeen = randomNumber(0,Queens.length-1);
+                    
+                if(threequeen == randomqueen || threequeen == secondqueen)
+                {
+                    ssame = true;
+                }
+                else
+                {
+                    ssame = false;
+                }
+            }
+        }
+        switch(randomNumber(0,5)){
+            case 0:
+                Untucked.createImage(currentCast[randomqueen].image);
+                Untucked.createImage(currentCast[secondqueen].image);
+                if(currentCast[randomqueen].GetRelation(currentCast[secondqueen].getName())<=-2)
+                {
+                    Untucked.createBold(currentCast[randomqueen].getName()+" is getting into a fight with "+currentCast[secondqueen].getName()+"!");
+                    Untucked.createBold(currentCast[secondqueen].getName()+" say that "+currentCast[randomqueen].getName()+" should have been out the competition the first week.");
+                    currentCast[currentCast.indexOf(currentCast[randomqueen])].ChangeRelation(currentCast[secondqueen].getName(),-3);
+                    currentCast[currentCast.indexOf(currentCast[secondqueen])].ChangeRelation(currentCast[randomqueen].getName(),-3);
+                }
+                else
+                {
+                    Untucked.createBold(currentCast[randomqueen].getName()+" compliment "+currentCast[secondqueen].getName()+" on their runway tonight.");
+                    currentCast[currentCast.indexOf(currentCast[randomqueen])].ChangeRelation(currentCast[secondqueen].getName(),1);
+                    currentCast[currentCast.indexOf(currentCast[secondqueen])].ChangeRelation(currentCast[randomqueen].getName(),1);
+                }
+                break;
+
+            case 1:
+                Untucked.createImage(currentCast[randomqueen].image);
+                Untucked.createImage(currentCast[secondqueen].image);
+                Untucked.createBold(currentCast[randomqueen].getName()+" has a laugh with "+currentCast[secondqueen].getName()+"!");
+
+                currentCast[currentCast.indexOf(currentCast[randomqueen])].ChangeRelation(currentCast[secondqueen].getName(),1);
+                currentCast[currentCast.indexOf(currentCast[secondqueen])].ChangeRelation(currentCast[randomqueen].getName(),1);
+                break;
+
+           case 2:
+                if(topQueens.length>2)
+                {
+                    let rdmtopqueen = randomNumber(0,topQueens.length-1);
+                    Untucked.createImage(topQueens[rdmtopqueen].image);
+                    if(all_stars || lipsync_assassin)
+                    {
+                            if(top2.indexOf(rdmtopqueen)==-1)
+                            {
+                                if(all_stars)
+                                    Untucked.createBold(topQueens[rdmtopqueen].getName()+" say that they really wished that they were in the top 2.");
+                                if(lipsync_assassin)
+                                    Untucked.createBold(topQueens[rdmtopqueen].getName()+" say that they really wished that they were the top allstar of the week.");
+                            }
+                    }
+                    else
+                    {
+                            Untucked.createBold(topQueens[rdmtopqueen].getName()+" say that they think they have a really good chance at winning this challenge.");
+                    }
+                }
+                break;
+            case 3:
+                if(topQueens.length>2)
+                {
+                    let rdmbtmqueen = randomNumber(0,bottomQueens.length-1);
+                    Untucked.createImage(bottomQueens[rdmbtmqueen].image);
+                    if(all_stars || lipsync_assassin)
+                    {
+                        Untucked.createBold(bottomQueens[rdmbtmqueen].getName()+" say that they really felt like they dissapointed the judges.");
+                    }
+                    else
+                    {
+                            Untucked.createBold(bottomQueens[rdmbtmqueen].getName()+" say that they might be afraid that they will have to lipsync tonight.");
+                    }
+                }
+                break;
+            case 4:
+                if(topQueens.length>2)
+                {
+                    let rdmtopqueen = randomNumber(0,topQueens.length-1);
+                    let rdmsafequeen = randomNumber(0,currentCast.length-1);
+                    let rdmbtmqueen = randomNumber(0,bottomQueens.length-1);
+
+                    Untucked.createImage(currentCast[rdmsafequeen].image);
+                    Untucked.createImage(bottomQueens[rdmbtmqueen].image);
+                    let response = randomNumber(0,1);
+                    if(response==1)
+                    {
+                        Untucked.createImage(topQueens[rdmtopqueen].image);
+                    }
+                    Untucked.createBold(currentCast[rdmsafequeen].getName()+" ask "+bottomQueens[rdmbtmqueen].getName()+" what they thought about their critiques.");
+                    if(randomNumber(0,1)==0)
+                    {
+
+                            Untucked.createBold(bottomQueens[rdmbtmqueen].getName()+" respond that they thought their critiques were completely false.");
+                            if(response==1)
+                            {
+                                if(randomNumber(0,1)==1)
+                                {
+                                    Untucked.createBold(topQueens[rdmtopqueen].getName()+" say that "+bottomQueens[rdmbtmqueen].getName()+" is completely out of touch with reality.");
+                                    currentCast[currentCast.indexOf(topQueens[rdmtopqueen])].ChangeRelation(bottomQueens[rdmbtmqueen].getName(),-1);
+                                    currentCast[currentCast.indexOf(bottomQueens[rdmbtmqueen])].ChangeRelation(topQueens[rdmtopqueen].getName(),-1);
+                                }
+                                else
+                                {
+                                    Untucked.createBold(topQueens[rdmtopqueen].getName()+" say that "+bottomQueens[rdmbtmqueen].getName()+", they kind of disagree because maybe something that the judge said was not right, but they were over right.");
+                                }
+                            }
+                        
+                        
+                    
+    
+                    }
+                    else
+                    {
+                        Untucked.createBold(bottomQueens[rdmbtmqueen].getName()+" respond that they felt the judges were dissapointed in them, and say how much this competition means to them.");
+                        if(response==1)
+                        {
+                            if(randomNumber(0,1)==1)
+                            {
+                                Untucked.createBold(topQueens[rdmtopqueen].getName()+" say to "+bottomQueens[rdmbtmqueen].getName()+", that even if she has to lipsync, she has still made it here.");
+                                currentCast[currentCast.indexOf(topQueens[rdmtopqueen])].ChangeRelation(bottomQueens[rdmbtmqueen].getName(),1);
+                                currentCast[currentCast.indexOf(bottomQueens[rdmbtmqueen])].ChangeRelation(topQueens[rdmtopqueen].getName(),1);
+                            }
+                            else
+                            {
+                                Untucked.createBold(topQueens[rdmtopqueen].getName()+" say to "+bottomQueens[rdmbtmqueen].getName()+", if they ever needs someone to talk they are here, and that they are sure that people are going to love them.");
+                                currentCast[currentCast.indexOf(topQueens[rdmtopqueen])].ChangeRelation(bottomQueens[rdmbtmqueen].getName(),1);
+                                currentCast[currentCast.indexOf(bottomQueens[rdmbtmqueen])].ChangeRelation(topQueens[rdmtopqueen].getName(),1);
+                            }
+                        }
+                    }
+                }
+                break;
+                case 5:
+                Untucked.createImage(currentCast[randomqueen].image);
+                Untucked.createImage(currentCast[secondqueen].image);
+                if(currentCast[randomqueen].GetRelation(currentCast[secondqueen].getName())<1)
+                {
+                    Untucked.createBold(currentCast[randomqueen].getName()+" is getting into a fight with "+currentCast[secondqueen].getName()+"!");
+                    Untucked.createBold(currentCast[secondqueen].getName()+" say that "+currentCast[randomqueen].getName()+" should have been out the competition the first week.");
+                    currentCast[currentCast.indexOf(currentCast[randomqueen])].ChangeRelation(currentCast[secondqueen].getName(),-3);
+                    currentCast[currentCast.indexOf(currentCast[secondqueen])].ChangeRelation(currentCast[randomqueen].getName(),-3);
+                }
+                else
+                {
+                    Untucked.createBold(currentCast[randomqueen].getName()+" compliment "+currentCast[secondqueen].getName()+" on their runway tonight.");
+                    currentCast[currentCast.indexOf(currentCast[randomqueen])].ChangeRelation(currentCast[secondqueen].getName(),1);
+                    currentCast[currentCast.indexOf(currentCast[secondqueen])].ChangeRelation(currentCast[randomqueen].getName(),1);
+                }
+                break;
+
+               
+        }
+}
+
+function UntuckedSafeQueens()
+{
+    document.body.style.backgroundImage = "url('image/untucked.webp')";
+    let Untucked = new Scene();
+    Untucked.clean();
+    Untucked.createHeader("In untucked...");
+    Untucked.createBigText("All the safe queens come back from the main stage.");
+    let SafeQueens = [];
+    let safetext = ""
+    for (let i = 0; i < currentCast.length; i++)
+    {
+        if (topQueens.indexOf(currentCast[i]) == -1 && bottomQueens.indexOf(currentCast[i]) == -1) {
+            Untucked.createImage(currentCast[i].image);
+            SafeQueens.push(currentCast[i]);
+        }
+    }
+
+    if(SafeQueens.length==1)
+    {
+        Untucked.createBold(SafeQueens[0].getName()+" grab a drink and sits down while waiting for the other queens.");
+    }
+    else
+    {
+        for (let s = 0; s < SafeQueens.length; s++)
+        {
+            if(s!=SafeQueens.length-1)
+            {
+                safetext += SafeQueens[s].getName();
+                if(s!=SafeQueens.length-2)
+                {
+                    safetext +=", ";
+                }
+                else
+                {
+
+                }
+            }
+            else
+            {
+                safetext += " and "+SafeQueens[s].getName(); 
+            }
+        }
+        Untucked.createBold(safetext+" all grab a drink and sit down.");
+    }
+    
+    Untucked.createHorizontalLine();
+
+    let howmanyevents = randomNumber(1,6);
+
+    if(randomNumber(0,10)>8 && SafeQueens.length!=1)
+    {
+    let untext = "";
+                for (let i = 0; i < SafeQueens.length; i++)
+                {
+
+                    for (let q = 0; q < currentCast.length; q++)
+                    {
+                        if (topQueens.indexOf(currentCast[i]) == -1 && bottomQueens.indexOf(currentCast[i]) == -1)
+                        {
+                            for (let k = 0; k < currentCast.length; k++)
+                            {
+                                currentCast[q].ChangeRelation(currentCast[k].getName(),1);
+                            }
+                        }
+                    }
+
+                    Untucked.createImage(SafeQueens[i].image);
+                    if(i!=SafeQueens.length-1)
+                    {
+                        untext += SafeQueens[i].getName()+", ";
+                    }
+                    else
+                    {
+                        untext += " and "+SafeQueens[i].getName()+" ";
+                    }
+                }
+                Untucked.createBold(untext+" all have a laugh about the challenge!");
+    }
+
+    for (let e = 0; e < howmanyevents; e++)
+    {
+        GenerateSafeUntuckedEvent(SafeQueens, Untucked);
+    }
+    Untucked.createButton("Proceed","Critiques()");
+}
+function GetCompliment()
+{
+    let actingc =[
+        ', the acting was so naturally funny! It was really good.',
+        ', you have such good physical comedy. You were a joy to watch!',
+        ', each time you came onto the screen, you stole the show.',
+        ', I loved seeing you on screen. It was so good each time.',
+        ', I feel like you found the perfect balance between comedy and seriousness. It was great.'
+    ];
+
+    let standupc =[
+        ', your stand up was very natural. Good job, this week.',
+        ', I saw how nervous you were, but you completely knocked it out of the park once you got in. Great performance.',
+        ', this is how you do stand up. It felt very natural and funny, I loved every second of it.',
+        ', you were funny from begginning to end. You had a really good flow. Good job.',
+        ', I cannot say how much I was entertained, it was really good.'
+    ];
+
+    let roastc =[
+        ', your roast was very funny, and you felt natural up there. Good job, this week.',
+        ', we asked you for a roast, and damn you brought the flamethrower. Great performance.',
+        ', this is how you do a roast. You needed to find that fine line, and you did. Really good job tonight.',
+        ', you were funny from begginning to end. You had a really good flow. Good job.',
+        ', I cannot say how much I was entertained by your roast, it was really punch after punch after punch. You should be proud of yourself.'
+    ];
+
+    let commercialc =[
+        ', you branded yourself all over, it was really good.',
+        ', you did exactly what we needed of you, it was coherent, funny, ... . Outstanding job tonight!',
+        ', your commercial was very you. It was really great, I loved it!',
+        ', this challenge was totally up your alley, it had EVERYTHING! Great job, this week'
+    ];
+    let marketingc = [
+        ', tonight, girl are you hidden marketer ? It was so GOOD!',
+        ', you had ups and down and presented well. All the elements were there to make it really good.',
+        ', you had probably the best ad, it was funny and serious at the time!',
+        ', the design of your ad was simply amazing. Good job tonight.'
+    ];
+    let dancec = [
+        ', you made it look very easy, and you looked at ease. Good job!',
+        ', you nailed everything single aspect of it and you looked gorgeous congrats!',
+        ', you had something hard to do and you knocked it out of the park!',
+        ', each time you came on stage, I was like omg what are they going to do ? You killed it!',
+        ', you had such an ease to do this! It was really great to watch!'
+    ];
+    let makeoverc = [
+        ', you completely nailed this, you and your partner looks great.',
+        ', you branded this successfully! If I saw your partner alone, I would have knowned it was yours.',
+        ', you look so beautiful tonight and your partner does too! We really see family resemblance.',
+        ', this look is very you! It\'s beautiful, and so does your partner.'
+    ];
+    let runwayc = [
+        ', your looks were very good. I loved them all.',
+        ', can you give me your wardrobe ? They were all so good!',
+        ', did you sew all of theses yourself, if so you are a really good sewer. Congrats!',
+        ', you literally ate up all of your looks. Great job tonight.'
+    ];
+
+    let designc =[
+        ', this outfit is beautiful, I love every details of it. Good job, this week.',
+        ', You look majestic tonight. I love how you worked the fabric, it looks so great! Congrats.',
+        ', sometimes simple is bad, but here simple is smart. You made a simple dress but the attention to details is immaculate. You did really good tonight.',
+        ', this is so good. I love it! Can you make some for me ? No, but for real this outfit is FIRE! I loved it.',
+        ', are you a sewer ? Because if not you should become one. It is simply gorgeours from concept to realization.',
+        ', this outfit is very well made. It is really good.',
+        ', this challenge was up your alley, and you made lemonade out of lemons. This look is great, from the styling of everything down to the jewelry, just perfect.'
+    ];
+
+    let improvc = [
+        ', you looked really at ease , and you played it smart!',
+        ', you were really funny! And you knew how to bounce back from other people!',
+        ', you are really good at improv, I can tell you it was so GOOD!',
+        ', I loved your performance, you were really great!'
+    ];
+    let snatchgamec = [
+        ', your character was brilliant you were incredibly funny.',
+        ', each time it felt you got boring you bounced back up!',
+        ', you picked a very good character, it was really funny from beginning to end.',
+        ', you played this really smart, each time you had a chance to be in the spot light, you took it. Great job.',
+        ', you really knew how to bounce back from others people, and it really made you shine.'
+    ];
+    let rusicalc = [
+        ', you took a role and made it your own, you WERE the character!',
+        ', you were a joy to watch, you did so good!',
+        ', I loved each time you were on the stage, you had that caracterization spot on!',
+        ', you may not have had the best role, but GIRL! You turned it out.'
+    ];
+
+    let ballc = [
+        ', all of yours looks were very well made. Congrats!',
+        ', you had such an ease at sewing it was incredible!',
+        ', all of yours looks were perfect, from concept to realization, I can tell you\'re not here to play games!',
+        ', your third look may not have been the best, but GIRL you sold like it was a versace dress. Congrats.'
+    ];
+
+    let rumixc = [
+        ', your lyrics were great and so was your look. Good job tonight.',
+        ', I had so much watching you perform, you were great.',
+        ', damn you left the others no chance! You were such a stand-out.',
+        ', you looked you had fun, and it made us enjoy you even more!'
+    ];
+    let girlgroupc = [
+        ', your lyrics were great and so was your look. Good job tonight.',
+        ', I had so much fun watching you perform, you were great.',
+        ', damn you left the others no chance! You were such a stand-out.',
+        ', you looked you had fun, and it made us enjoy you even more!',
+        ', you were the stand-out of your group!',
+        ', you were a very cohesive group. Good job!',
+        ', you had so much fun! It really took us into your world.'
+    ];
+
+    let talentc =[
+        ', this perfomance was so great! You are a natural, great job.',
+        ', you did outstanding tonight, from start to finish, it was perfect. Congrats.',
+        ', was it something we already saw before ? Yes, but you turned it out, taking something good we already seen and make it even better. You did really good tonight.',
+        ', this was so good. I loved it! You looked beautiful while doing something unexpected. Good job on the surprise tonight.',
+        ', in the beginning, i could see you getting in your head, but once you got the hang of it, you knocked it out of the park.',
+        ', we can tell, you prepared. This was really great.',
+        ', you made something that we didn\'t expect a talent. And it worked! You were fabulous.'
+    ];
+
+    switch(episodeChallenges[episodeChallenges.length-1])
+    {
+        case"Acting":
+            return(actingc[randomNumber(0,actingc.length-1)]);
+            break;
+        case"Stand Up":
+            return(standupc[randomNumber(0,standupc.length-1)]);
+            break;
+        case"Roast":
+            return(roastc[randomNumber(0,roastc.length-1)]);
+            break;
+        case"Commercial":
+            return(commercialc[randomNumber(0,commercialc.length-1)]);
+            break;
+        case"Marketing":
+            return(marketingc[randomNumber(0,marketingc.length-1)]);
+            break;
+        case"Dance":
+            return(dancec[randomNumber(0,dancec.length-1)]);
+            break;
+        case"Choreo":
+            return(dancec[randomNumber(0,dancec.length-1)]);
+            break;
+        case"Makeover":
+            return(makeoverc[randomNumber(0,makeoverc.length-1)]);
+            break;
+        case"Runway":
+            return(runwayc[randomNumber(0,runwayc.length-1)]);
+            break;
+        case"Design":
+            return(designc[randomNumber(0,designc.length-1)]);
+            break;
+        case"Political Debate":
+            return(improvc[randomNumber(0,improvc.length-1)]);
+            break;
+        case"The Bossy Rossy Show":
+            return(improvc[randomNumber(0,improvc.length-1)]);
+            break;
+        case"The Bitchelor":
+            return(improvc[randomNumber(0,improvc.length-1)]);
+            break;
+        case"Improv":
+            return(improvc[randomNumber(0,improvc.length-1)]);
+            break;
+        case"Snatch Game of Love":
+            return(snatchgamec[randomNumber(0,snatchgamec.length-1)]);
+            break;
+        case"Snatch Game":
+            return(snatchgamec[randomNumber(0,snatchgamec.length-1)]);
+            break;
+        case"Rusical":
+            return(rusicalc[randomNumber(0,rusicalc.length-1)]);
+            break;
+        case"Ball":
+            return(ballc[randomNumber(0,ballc.length-1)]);
+            break;
+        case"Rumix":
+            return(rumixc[randomNumber(0,rumixc.length-1)]);
+            break;
+        case"Girl Group":
+            return(girlgroupc[randomNumber(0,girlgroupc.length-1)]);
+            break;
+        case"Talent Show":
+            return(talentc[randomNumber(0,talentc.length-1)]);
+            break;
+        
+        default:
+            return("Not set yet");
+    }
+}
+
+function GetCritiques()
+{
+    let actingc =[
+        ', the acting was just not good, it felt really stiff.',
+        ', you had such a good start, but then you faded into the background which was not good...',
+        ', each time you came onto the screen, you looked more lost than the last time.',
+        ', I feel like you were lacking confidence, and it showed.',
+        ', I feel like you wanted to stand out so much, you stood out for the wrong reasons.'
+    ];
+
+    let standupc =[
+        ', your stand up was very stiff. You looked very uneased.',
+        ', I saw how nervous you were, and you never got of it. Get out of your head now, before it fucks you up.',
+        ', your jokes just were not landing and you kept repeating yourself. It was not good.',
+        ', you took a long time to get to the first joke, for it to be not funny.',
+        ', you started off strong, but you were getting worse as time went on. For it to be successfull you need to start and end with a bang.'
+    ];
+
+    let roastc =[
+        ', your roast was very bad. You looked very uneased.',
+        ', I saw how nervous you were, and you never got of it. Get out of your head now, before it fucks you up.',
+        ', your jokes just were not landing and you kept repeating yourself. It was not good.',
+        ', you took a long time to get to the first joke, for it to be not funny.',
+        ', you started off strong, but you were getting worse as time went on. For it to be successfull you need to start and end with a bang.',
+        ', your roast was just not funny, it felt more offensive than anything.',
+        ', it felt like you didn\'t use the audience, you could used have them more.'
+    ];
+
+    let commercialc =[
+        ', I couldn\'t find that it was your marketing, if you weren\'t on it, it really lacked brand.',
+        ', your commercial was incoherent and it really showed.',
+        ', your commercial lacked a lot of branding. It was bad.',
+        ', this challenge was totally up your alley, and you messed it up. You need to focus on what makes you well you.'
+    ];
+    let marketingc = [
+        ', tonight, if really fell flat. You were almost not there.',
+        ', it was very one note and messy. All the elements were there to make it not good.',
+        ', it felt like you wanted comedy and seriousness but it didn\'t find the balance and it was bad.',
+        ', the design was really confusing. I was lost with it.'
+    ];
+    let dancec = [
+        ', you forgot most of the choreo, and it showed.',
+        ', you knew the choreo but didn\'t put you in it, which was the challenge.',
+        ', you had something hard to do and you didn\'t rose up to the occasion.',
+        ', each time you came on stage, I was like who is she ? You almost were never in the spotlight.',
+        ', you had such a hard time to do this and it showed.'
+    ];
+    let makeoverc = [
+        ', I don\'t see any resemblance between you and your partner.',
+        ', you didn\'t do your drag. If I saw your partner alone, I wouldn\'t have knowned it was yours.',
+        ', you look so beautiful tonight, but your partner does not. And I feel like it was almost two differents outfits.',
+        ', this look is not very you. It looks like someone else\'s partner.'
+    ];
+    let runwayc = [
+        ', your looks were very basic. It looked unfinished.',
+        ', your looks didn\'t match your style at all.',
+        ', your looks felt rushed, there was no details.',
+    ];
+
+    let designc =[
+        ', this outfit is not good, it\'s way too busy for the eyes.',
+        ', You look okay. The outfit had a great concept but the realization is just not here.',
+        ', sometimes simple is bad, but here is the case. You made a simple dress and there is no attention to details.',
+        ', this is so weird. The outfit has no shape and the material looks very weird.',
+        ', there is simply nothing, it\'s a mash-up of glued together stuff.',
+    ];
+
+    let improvc = [
+        ', you looked really uneased , and you played it safe!',
+        ', you were funny, but you couldn\'t bounce off people and it showed.',
+        ', you are not good at improv, I can tell you it was really stiff.',
+        ', I didn\'t like your performance, you were far from the best.'
+    ];
+    let snatchgamec = [
+        ', your character was getting boring, and you didn\'t switch it up.',
+        ', each time it felt you got boring, you just dug deeper, and you put yourself in a hole that you couldn\'t get out of.',
+        ', you picked a character who was not the best, and it was one note the entire time.',
+        ', you played this really bad, when you had a chance to shine, you simply didn\'t take it.',
+        ', you couldn\'t bounce back off of other people. And that really fucked you over.'
+    ];
+    let rusicalc = [
+        ', you took a role, and just played it, you needed to be the character, and you didn\'t do that.',
+        ', you looked unconfortable.',
+        ', each time you were on the stage, that caracterization was very off.',
+        ', you may not have had the best role, and you faded into the background.'
+    ];
+
+    let ballc = [
+        ', all of yours looks were not good.',
+        ', you had such an uneasyness at walking the runway, it showed.',
+        ', from concept to realization, it felt like you didn\'t fully fleshed out the concept.',
+        ', your third look may not have been the best, and the problem is your two others looks were not incredible either.'
+    ];
+
+    let rumixc = [
+        ', your lyrics were unoriginal, and you lacked choreo.',
+        ', I felt sad for you, you looked sad each time you talked on stage.',
+        ', you were such a stand-out, but your lyrics really dragged you down.',
+        ', you looked you didn\'t have fun, and it took us out of the fantasy.'
+    ];
+    let girlgroupc = [
+        ', your lyrics were unoriginal, and you lacked choreo.',
+        ', I felt sad for you, you looked sad each time you talked on stage.',
+        ', you were such a stand-out, but your lyrics really dragged you down.',
+        ', you looked you didn\'t have fun, and it took us out of the fantasy.',
+        ', you were the stand-out of your group, which here was not a good thing.',
+        ', you were late on the group choreo, and you looked off because of it',
+    ];
+
+    let talentc =[
+        ', this was not something original, and you didn\'t add you to it.',
+        ', you were kinda boring, from start to finish, it was one note.',
+        ', was it something we already saw before ? Yes, and you didn\'t change it at all.',
+        ', this was so weird. You looked beautiful while doing something unexpected, but i couldn\'t tell what your talent was.',
+        ', in the beginning, i could see you getting in your head, and you never got out of it. You struggled.',
+        ', we can tell, you struggled. Don\'t let the audience see it.',
+    ];
+
+    switch(episodeChallenges[episodeChallenges.length-1])
+    {
+        case"Acting":
+            return(actingc[randomNumber(0,actingc.length-1)]);
+            break;
+        case"Stand Up":
+            return(standupc[randomNumber(0,standupc.length-1)]);
+            break;
+        case"Roast":
+            return(roastc[randomNumber(0,roastc.length-1)]);
+            break;
+        case"Commercial":
+            return(commercialc[randomNumber(0,commercialc.length-1)]);
+            break;
+        case"Marketing":
+            return(marketingc[randomNumber(0,marketingc.length-1)]);
+            break;
+        case"Dance":
+            return(dancec[randomNumber(0,dancec.length-1)]);
+            break;
+        case"Choreo":
+            return(dancec[randomNumber(0,dancec.length-1)]);
+            break;
+        case"Makeover":
+            return(makeoverc[randomNumber(0,makeoverc.length-1)]);
+            break;
+        case"Runway":
+            return(runwayc[randomNumber(0,runwayc.length-1)]);
+            break;
+        case"Design":
+            return(designc[randomNumber(0,designc.length-1)]);
+            break;
+        case"Political Debate":
+            return(improvc[randomNumber(0,improvc.length-1)]);
+            break;
+        case"The Bossy Rossy Show":
+            return(improvc[randomNumber(0,improvc.length-1)]);
+            break;
+        case"The Bitchelor":
+            return(improvc[randomNumber(0,improvc.length-1)]);
+            break;
+        case"Improv":
+            return(improvc[randomNumber(0,improvc.length-1)]);
+            break;
+        case"Snatch Game of Love":
+            return(snatchgamec[randomNumber(0,snatchgamec.length-1)]);
+            break;
+        case"Snatch Game":
+            return(snatchgamec[randomNumber(0,snatchgamec.length-1)]);
+            break;
+        case"Rusical":
+            return(rusicalc[randomNumber(0,rusicalc.length-1)]);
+            break;
+        case"Ball":
+            return(ballc[randomNumber(0,ballc.length-1)]);
+            break;
+        case"Rumix":
+            return(rumixc[randomNumber(0,rumixc.length-1)]);
+            break;
+        case"Girl Group":
+            return(girlgroupc[randomNumber(0,girlgroupc.length-1)]);
+            break;
+        case"Talent Show":
+            return(talentc[randomNumber(0,talentc.length-1)]);
+            break;
+        
+        default:
+            return("Not set yet");
+    }
+}
+
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+let CritiQueens = [];
+function Critiques()
+{
+    CritiQueens = [];
+    document.body.style.backgroundImage = "url('image/mainstage.webp')";
+    let MS = new Scene();
+    MS.clean();
+    MS.createHeader("On the main stage...");
+    
+    MS.createBigText('This week judging panel is...');
+    for (let j =0; j<judgingpanel.length; j++)
+    {
+        MS.createImage(judgingpanel[j].image);
+    }
+    MS.createBold(judgetext);
+    MS.createHorizontalLine();
+    for (let i = 0; i < currentCast.length; i++)
+    {
+        if (topQueens.indexOf(currentCast[i]) != -1 || bottomQueens.indexOf(currentCast[i]) != -1) {
+            MS.createImage(currentCast[i].image,"blue");
+            CritiQueens.push(currentCast[i]);
+        }
+    }
+    
+    shuffleArray(CritiQueens);
+    MS.createBold("You ladies represents the tops and bottoms of the week, now it's time for judges critiques.");
+    for (let i = 0; i < CritiQueens.length; i++)
+    {
+        MS.createHorizontalLine();
+        if(i==0)
+        {
+            MS.createBold('First up, we have '+CritiQueens[i].getName()+"!");
+        }
+        else if(i==CritiQueens.length-1)
+        {
+            MS.createBold('At last, we have '+CritiQueens[i].getName()+"!");
+        }
+        else
+        {
+            MS.createBold('Next, we have '+CritiQueens[i].getName()+"!");
+        }
+        if (topQueens.indexOf(CritiQueens[i]) != -1)
+        {
+            MS.createImage(judgingpanel[randomNumber(0,judgingpanel.length-1)].image);
+            MS.createImage(CritiQueens[i].image);
+            MS.createBold("\""+CritiQueens[i].getName()+GetCompliment()+"\"");
+
+            MS.createImage(judgingpanel[randomNumber(0,judgingpanel.length-1)].image);
+            MS.createImage(CritiQueens[i].image);
+            MS.createBold("\""+CritiQueens[i].getName()+GetCompliment()+"\"");
+        }
+        else
+        {
+            MS.createImage(judgingpanel[randomNumber(0,judgingpanel.length-1)].image);
+            MS.createImage(CritiQueens[i].image);
+            MS.createBold("\""+CritiQueens[i].getName()+GetCritiques()+"\"");
+
+            MS.createImage(judgingpanel[randomNumber(0,judgingpanel.length-1)].image);
+            MS.createImage(CritiQueens[i].image);
+            MS.createBold("\""+CritiQueens[i].getName()+GetCritiques()+"\"");
+        }
+    }
+
+    let whoshouldgohome = false;
+    if( randomNumber(0,10)==10 && currentCast.length<=7)
+    {
+        whoshouldgohome = true;
+    }
+
+    if(whoshouldgohome==true)
+    {
+        let randomreason = [
+            ", because I feel like they dropped the ball on the challenge.",
+            ", because I feel like they were the weakest in this challenge.",
+            ", I just feel like they haven't done in this challenge.",
+            ", because their critiques were the worst tonight.",
+            ", and I know that the person we saw today in the challenge, wasn't them.",
+            ", because they just didn't perform to the maximum of their ability",
+            ", they were just bad, no shade to them.",
+            ", It's just that tonight they haven't been up to rise to the occasion."
+        ];
+
+        MS.createHorizontalLine();
+        MS.createImage(judgingpanel[0].image);
+        MS.createBold("Ladies, before you all go untuck I have one more question to ask you all.");
+        MS.createBold("Who do you think should go home tonight and why ?");
+        for (let i = 0; i < CritiQueens.length; i++)
+        {
+            let randombtm = randomNumber(0,bottomQueens.length-1);
+            MS.createImage(CritiQueens[i].image);
+            MS.createImage(bottomQueens[randombtm].image,"#e33650");
+            if(randombtm == i)
+            {
+                MS.createBold("\""+bottomQueens[randombtm].getName()+", because i cannot lie to you all, and say that I don't deserve to lipsync.\"");
+            }
+            else
+            {
+                MS.createBold("\""+bottomQueens[randombtm].getName()+randomreason[randomNumber(0,randomreason.length-1)]+"\"");
+            }
+        }
+    }
+
+    if (all_stars)
+        MS.createButton("Proceed", "top2AndBtm()");
+    else if (lipsync_assassin)
+        MS.createButton("Proceed", "topAndBtm()");
+    else
+        MS.createButton("Proceed", "UntuckedTopAndBottoms()");
+    
+
+}
+function ASUntucked()
+{
+    let top1choice = [];
+    let top2choice = [];
+
+    let CritiquesQueens = [];
+    let critiquedtext ="";
+
+    document.body.style.backgroundImage = "url('image/untucked.webp')";
+    let Untucked = new Scene();
+    Untucked.clean();
+    Untucked.createHeader("In untucked...");
+    Untucked.createBigText("All the tops and bottoms queens come back from the main stage.");
+
+
+    for (let j = 0; j < bottomQueens.length; j++) {
+        top1choice.push(bottomQueens[j]);
+        top2choice.push(bottomQueens[j]);
+    }
+    
+    if(all_stars)
+    {
+        
+        if(currentCast.length!=CritiQueens.length)
+        {
+            for (let i = 0; i < CritiQueens.length; i++)
+            {
+                Untucked.createImage(CritiQueens[i].image); 
+            }
+        }
+        else
+        {
+                CritiquesQueens = [];
+                console.log(CritiquesQueens.length);
+                for (let i = 0; i < currentCast.length; i++)
+                {
+                        Untucked.createImage(currentCast[i].image); 
+                        CritiquesQueens.push(currentCast[i]);
+                }
+                console.log(CritiquesQueens.length);
+        }
+        if(CritiQueens.length==1)
+        {
+            Untucked.createBold(CritiQueens[0].getName()+" grab a drink and sits down while waiting for the other queens.");
+        }
+        else
+        {
+            for (let s = 0; s < CritiQueens.length; s++)
+            {
+                if(s!=CritiQueens.length-1)
+                {
+                    critiquedtext += CritiQueens[s].getName();
+                    if(s!=CritiQueens.length-2)
+                    {
+                        critiquedtext +=", ";
+                    }
+                    else
+                    {
+    
+                    }
+                }
+                else
+                {
+                    critiquedtext += " and "+CritiQueens[s].getName(); 
+                }
+            }
+            if(CritiQueens.length!=currentCast.length)
+            {
+                Untucked.createBold(critiquedtext+" all grab a drink and sit down with the safes queens.");
+            }
+            else
+            {
+                Untucked.createBold(critiquedtext+" all grab a drink and sit down.");
+            }
+        }
+        let howmanyev = (randomNumber(1,8));
+        for(let ev = 0; ev<howmanyev; ev++)
+        {
+            GenerateUntuckedEvent(currentCast,Untucked);
+        }
+
+        Untucked.createHorizontalLine();
+        Untucked.createBigText("In deliberation...");
+
+        let setls1 = false;
+        let setls2 = false;
+        let fally = false;
+        let sally=false;
+        for (let i = 0; i < top2.length; i++) {
+            for (let j = 0; j < bottomQueens.length; j++) {
+            Untucked.createImage(top2[i].image, "cyan");
+            Untucked.createImage(bottomQueens[j].image);
+                    if(i==0)
+                    {
+                        if((top2[0].getFirstSeason() == bottomQueens[j].getFirstSeason()) && episodeCount == 1)
+                        {
+                            Untucked.createBold(top2[0].getName() + " tells "+bottomQueens[j].getName()+" that it's unfornate that "+bottomQueens[j].getName()+" had to be in the bottom.");
+                            Untucked.createBold(top2[0].getName() + " tells "+bottomQueens[j].getName()+" that she won't pick her lipstick because they are season sisters.");
+                            top1choice.splice(top1choice.indexOf(bottomQueens[j]),1);
+                        }
+                        else if(top2[0].GetRelation(bottomQueens[j].getName())>=2)
+                        {
+                            Untucked.createBold(top2[0].getName() + " tells "+bottomQueens[j].getName()+" that they don't have to worry about it, because they cannot send home their friend.");
+                            top1choice.splice(top1choice.indexOf(bottomQueens[j]),1);
+                        }
+                        else if(top2[0].GetRelation(bottomQueens[j].getName())<-2)
+                        {
+                            Untucked.createBold(top2[0].getName() + " tells "+bottomQueens[j].getName()+" that they don't know who to pick yet, but that they cannot promise it won't be "+bottomQueens[j].getName()+".");
+                        }
+                        else if((bottomQueens[j].ppe / (bottomQueens[j].episodesOn)).toFixed(2)>3)
+                        {
+                            Untucked.createBold(bottomQueens[j].getName() + " tells "+top2[0].getName()+" that they shouldn't be sent home, bacause they have been doing so well in the competition.");
+                            Untucked.createBold(top2[0].getName() + " tells "+bottomQueens[j].getName()+" that they cannot say that they won't pick them, because they have been doing so well. However, it's really tempting to do so.");
+                            if(randomNumber(0,100)>=80)
+                            {
+                                Untucked.createBold(top2[0].getName()+" thinks that picking "+bottomQueens[j].getName()+" might help them later.");
+                                top2[0].lipstick = bottomQueens[j];
+                                setls1=true;
+                            }
+                            else
+                            {
+                                Untucked.createBold(top2[0].getName()+" thinks that picking "+bottomQueens[j].getName()+" would be a bitch move and the fans would go OFF on them.");
+                                top1choice.splice(top1choice.indexOf(bottomQueens[j]),1);
+                            }
+                        }
+                        else
+                        {
+                            if(randomNumber(0,10)>8)
+                            {
+                                Untucked.createBold(bottomQueens[j].getName()+" propose to "+top2[0].getName()+" the idea of an alliance.");
+                                if(randomNumber(0,5)>3 && fally == false)
+                                {
+                                    Untucked.createBold(top2[0].getName()+" accept the proposition of "+bottomQueens[j].getName()+" to make an alliance.");
+                                    top1choice.splice(top1choice.indexOf(bottomQueens[j]),1);
+                                    currentCast[currentCast.indexOf(top2[0])].AddAlliance(bottomQueens[j]);
+                                    currentCast[currentCast.indexOf(bottomQueens[j])].AddAlliance(top2[0]);
+                                    fally= true;
+                                }
+                                else
+                                {
+                                    Untucked.createBold(top2[0].getName()+" refuses the proposition of "+bottomQueens[j].getName()+" to make an alliance.");
+                                }
+                            }
+                            else
+                            {
+                                Untucked.createBold(top2[0].getName()+" tells "+bottomQueens[j].getName()+" that they don't know who to pick.");
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if((top2[1].getFirstSeason() == bottomQueens[j].getFirstSeason()) && episodeCount == 1)
+                        {
+                            Untucked.createBold(top2[1].getName() + " tells "+bottomQueens[j].getName()+" that it's unfornate that "+bottomQueens[j].getName()+" had to be in the bottom.");
+                            Untucked.createBold(top2[1].getName() + " tells "+bottomQueens[j].getName()+" that she won't pick her lipstick because they are season sisters.");
+                            top2choice.splice(top2choice.indexOf(bottomQueens[j]),1);
+                        }
+                        else if(top2[1].GetRelation(bottomQueens[j].getName())>=2)
+                        {
+                            Untucked.createBold(top2[1].getName() + " tells "+bottomQueens[j].getName()+" that they don't have to worry about it, because they cannot send home their friend.");
+                            top2choice.splice(top2choice.indexOf(bottomQueens[j]),1);
+                        }
+                        else if(top2[1].GetRelation(bottomQueens[j].getName())<-2)
+                        {
+                            Untucked.createBold(top2[0].getName() + " tells "+bottomQueens[j].getName()+" that they don't know who to pick yet, but that they cannot promise it won't be "+bottomQueens[j].getName()+".");
+                        }
+                        else if((bottomQueens[j].ppe / (bottomQueens[j].episodesOn)).toFixed(2)>3)
+                        {
+                            Untucked.createBold(bottomQueens[j].getName() + " tells "+top2[1].getName()+" that they shouldn't be sent home, bacause they have been doing so well in the competition.");
+                            Untucked.createBold(top2[1].getName() + " tells "+bottomQueens[j].getName()+" that they cannot say that they won't pick them, because they have been doing so well. However, it's really tempting to do so.");
+                            if(randomNumber(0,100)>=80)
+                            {
+                                Untucked.createBold(top2[0].getName()+" thinks that picking "+bottomQueens[j].getName()+" might help them later.");
+                                top2[1].lipstick = bottomQueens[j];
+                                setls2=true;
+                            }
+                            else
+                            {
+                                Untucked.createBold(top2[0].getName()+" thinks that picking "+bottomQueens[j].getName()+" would be a bitch move and the fans would go OFF on them.");
+                                top2choice.splice(top2choice.indexOf(bottomQueens[j]),1);
+                            }
+                        }
+                        else
+                        {
+                            if(randomNumber(0,10)>8)
+                            {
+                                Untucked.createBold(bottomQueens[j].getName()+" propose to "+top2[1].getName()+" the idea of an alliance.");
+                                if(randomNumber(0,5)>3 && sally == false)
+                                {
+                                    Untucked.createBold(top2[1].getName()+" accept the proposition of "+bottomQueens[j].getName()+" to make an alliance.");
+                                    top2choice.splice(top2choice.indexOf(bottomQueens[j]),1);
+                                    currentCast[currentCast.indexOf(top2[1])].AddAlliance(bottomQueens[j]);
+                                    currentCast[currentCast.indexOf(bottomQueens[j])].AddAlliance(top2[1]);
+                                    sally= true;
+                                }
+                                else
+                                {
+                                    Untucked.createBold(top2[1].getName()+" refuses the proposition of "+bottomQueens[j].getName()+" to make an alliance.");
+                                }
+                            }
+                            else
+                            {
+                                Untucked.createBold(top2[1].getName()+" tells "+bottomQueens[j].getName()+" that they don't know who to pick.");
+                            }
+                        }
+                    }
+
+                }
+                Untucked.createHorizontalLine();
+            }
+
+        if(setls1==true)
+        {
+            setls1 = false;
+        }
+        else
+        {
+            if(top1choice.length!=0)
+            {
+                top2[0].lipstick=top1choice[randomNumber(0,top1choice.length-1)];
+            }
+            else
+            {
+                top2[0].lipstick=bottomQueens[randomNumber(0,bottomQueens.length-1)]
+            }
+        }
+        if(setls2==true)
+        {
+            setls2 = false;
+        }
+        else
+        {
+            if(top2choice.length!=0)
+            {
+                top2[1].lipstick=top2choice[randomNumber(0,top2choice.length-1)];
+            }
+            else
+            {
+                top2[1].lipstick=bottomQueens[randomNumber(0,bottomQueens.length-1)]
+            }
+        }
+        
+        Untucked.createBigText("After deliberation...");
+        for (let i = 0; i < top2.length; i++) {
+            Untucked.createImage(top2[i].image, "cyan");
+            Untucked.createImage(top2[i].lipstick.image, "red");
+            Untucked.createBold(top2[i].getName() + " walks up to the box and pick " + top2[i].lipstick.getName() + "'s lipstick!");
+        }
+        Untucked.createButton("Proceed", "asLipSync()");
+    }
+    else
+    {
+        if(currentCast.length!=CritiQueens.length)
+        {
+            for (let i = 0; i < CritiQueens.length; i++)
+            {
+                Untucked.createImage(CritiQueens[i].image); 
+            }
+        }
+        else
+        {
+                CritiquesQueens = [];
+                console.log(CritiquesQueens.length);
+                for (let i = 0; i < currentCast.length; i++)
+                {
+                        Untucked.createImage(currentCast[i].image); 
+                        CritiquesQueens.push(currentCast[i]);
+                }
+                console.log(CritiquesQueens.length);
+        }
+        if(CritiQueens.length==1)
+        {
+            Untucked.createBold(CritiQueens[0].getName()+" grab a drink and sits down while waiting for the other queens.");
+        }
+        else
+        {
+            for (let s = 0; s < CritiQueens.length; s++)
+            {
+                if(s!=CritiQueens.length-1)
+                {
+                    critiquedtext += CritiQueens[s].getName();
+                    if(s!=CritiQueens.length-2)
+                    {
+                        critiquedtext +=", ";
+                    }
+                    else
+                    {
+    
+                    }
+                }
+                else
+                {
+                    critiquedtext += " and "+CritiQueens[s].getName(); 
+                }
+            }
+            if(CritiQueens.length!=currentCast.length)
+            {
+                Untucked.createBold(critiquedtext+" all grab a drink and sit down with the safes queens.");
+            }
+            else
+            {
+                Untucked.createBold(critiquedtext+" all grab a drink and sit down.");
+            }
+        }
+        let howmanyev = (randomNumber(1,8));
+        for(let ev = 0; ev<howmanyev; ev++)
+        {
+            GenerateUntuckedEvent(currentCast,Untucked);
+        }
+
+        Untucked.createHorizontalLine();
+        Untucked.createBigText("In deliberation...");
+        let setls1 = false;
+        for (let j = 0; j < bottomQueens.length; j++) {
+            Untucked.createImage(top2[0].image, "cyan");
+            Untucked.createImage(bottomQueens[j].image);
+                        if((top2[0].getFirstSeason() == bottomQueens[j].getFirstSeason()) && episodeCount == 1)
+                        {
+                            Untucked.createBold(top2[0].getName() + " tells "+bottomQueens[j].getName()+" that it's unfornate that "+bottomQueens[j].getName()+" had to be in the bottom.");
+                            Untucked.createBold(top2[0].getName() + " tells "+bottomQueens[j].getName()+" that she won't pick her lipstick because they are season sisters.");
+                            top1choice.splice(top1choice.indexOf(bottomQueens[j]),1);
+                        }
+                        else if(top2[0].GetRelation(bottomQueens[j].getName())>=2)
+                        {
+                            Untucked.createBold(top2[0].getName() + " tells "+bottomQueens[j].getName()+" that they don't have to worry about it, because they cannot send home their friend.");
+                            top1choice.splice(top1choice.indexOf(bottomQueens[j]),1);
+                        }
+                        else if(top2[0].GetRelation(bottomQueens[j].getName())<-2)
+                        {
+                            Untucked.createBold(top2[0].getName() + " tells "+bottomQueens[j].getName()+" that they don't know who to pick yet, but that they cannot promise it won't be "+bottomQueens[j].getName()+".");
+                        }
+                        else if((bottomQueens[j].ppe / (bottomQueens[j].episodesOn)).toFixed(2)>3)
+                        {
+                            Untucked.createBold(bottomQueens[j].getName() + " tells "+top2[0].getName()+" that they shouldn't be sent home, bacause they have been doing so well in the competition.");
+                            Untucked.createBold(top2[0].getName() + " tells "+bottomQueens[j].getName()+" that they cannot say that they won't pick them, because they have been doing so well. However, it's really tempting to do so.");
+                            if(randomNumber(0,100)>=80)
+                            {
+                                Untucked.createBold(top2[0].getName()+" thinks that picking "+bottomQueens[j].getName()+" might help them later.");
+                                top2[0].lipstick = bottomQueens[j];
+                                setls1=true;
+                            }
+                            else
+                            {
+                                Untucked.createBold(top2[0].getName()+" thinks that picking "+bottomQueens[j].getName()+" would be a bitch move and the fans would go OFF on them.");
+                                top1choice.splice(top1choice.indexOf(bottomQueens[j]),1);
+                            }
+                        }
+                        else
+                        {
+                            if(randomNumber(0,10)>8)
+                            {
+                                Untucked.createBold(bottomQueens[j].getName()+" propose to "+top2[0].getName()+" the idea of an alliance.");
+                                if(randomNumber(0,5)>3 && fally == false)
+                                {
+                                    Untucked.createBold(top2[0].getName()+" accept the proposition of "+bottomQueens[j].getName()+" to make an alliance.");
+                                    top1choice.splice(top1choice.indexOf(bottomQueens[j]),1);
+                                    currentCast[currentCast.indexOf(top2[0])].AddAlliance(bottomQueens[j]);
+                                    currentCast[currentCast.indexOf(bottomQueens[j])].AddAlliance(top2[0]);
+                                    fally= true;
+                                }
+                                else
+                                {
+                                    Untucked.createBold(top2[0].getName()+" refuses the proposition of "+bottomQueens[j].getName()+" to make an alliance.");
+                                }
+                            }
+                            else
+                            {
+                                Untucked.createBold(top2[0].getName()+" tells "+bottomQueens[j].getName()+" that they don't know who to pick.");
+                            }
+                        }
+                    }
+                    if(setls1==true)
+                    {
+                        setls1 = false;
+                    }
+                    else
+                    {
+                        if(top1choice.length!=0)
+                        {
+                            top2[0].lipstick=top1choice[randomNumber(0,top1choice.length-1)];
+                        }
+                        else
+                        {
+                            top2[0].lipstick=bottomQueens[randomNumber(0,bottomQueens.length-1)]
+                        }
+                    }
+            
+        
+        Untucked.createHorizontalLine();
+        let main = document.querySelector("div#MainBlock");
+        Untucked.createBigText("The queens vote...");
+        for (let i = 0; i < currentCast.length; i++) {
+            if (top2.indexOf(currentCast[i]) == -1) {
+                if (randomNumber(0, 100) <= 15 && currentCast.length > 6 && bottomQueens.sort((a, b) => b.unfavoritism - a.unfavoritism)[0] != currentCast[i] && currentCast.length <= totalCastSize - 2) {
+                    currentCast[i].lipstick = bottomQueens.sort((a, b) => b.unfavoritism - a.unfavoritism)[0];
+                    while (currentCast[i].lipstick.getName() == currentCast[i].getName()) {
+                        currentCast[i].lipstick = bottomQueens[randomNumber(0, bottomQueens.length - 1)];
+                    }
+                }
+                else {
+                    currentCast[i].lipstick = bottomQueens[randomNumber(0, bottomQueens.length - 1)];
+                    while (currentCast[i].lipstick.getName() == currentCast[i].getName()) {
+                        currentCast[i].lipstick = bottomQueens[randomNumber(0, bottomQueens.length - 1)];
+                    }
+                }
+                Untucked.createBold(currentCast[i].getName() + " voted for " + currentCast[i].lipstick.getName() + "!", "votes", "votesP");
+                currentCast[i].lipstick.votes++;
+            }
+        }
+        Untucked.createHorizontalLine();
+
+        
+
+        for (let i = 0; i < bottomQueens.length; i++) {
+            Untucked.createImage(bottomQueens[i].image, "red");
+            Untucked.createBold(bottomQueens[i].getName() + ": " + bottomQueens[i].votes.toString() + " votes", "total", "totalP");
+        }
+        Untucked.createHorizontalLine();
+        let resultVotes = document.querySelectorAll("p#totalP");
+        bottomQueens.sort((a, b) => b.votes - a.votes);
+        Untucked.createImage(top2[0].image, "cyan");
+        Untucked.createImage(top2[0].lipstick.image, "red");
+        Untucked.createBold(top2[0].getName() + " walks up to the box and chose " + top2[0].lipstick.getName() + "'s lipstick!");
+        Untucked.createButton("Proceed", "lsaLipSync()");
+    }
+    CritiquesQueens = [];
+}
+function UntuckedTopAndBottoms()
+{
+    document.body.style.backgroundImage = "url('image/untucked.webp')";
+    let Untucked = new Scene();
+    let CritiquedQueen = [];
+    let critiquedtext ="";
+    Untucked.clean();
+    Untucked.createHeader("Back in untucked...");
+    Untucked.createBigText("All the tops and bottoms queens come back from the main stage.");
+    for (let i = 0; i < currentCast.length; i++)
+    {
+        if (topQueens.indexOf(currentCast[i]) != -1 || bottomQueens.indexOf(currentCast[i]) != -1) {
+            Untucked.createImage(currentCast[i].image);
+            CritiquedQueen.push(currentCast[i]);
+        }
+    }
+
+    if(CritiquedQueen.length==1)
+    {
+        Untucked.createBold(CritiquedQueen[0].getName()+" grab a drink and sits down while waiting for the other queens.");
+    }
+    else
+    {
+        for (let s = 0; s < CritiquedQueen.length; s++)
+        {
+            if(s!=CritiquedQueen.length-1)
+            {
+                critiquedtext += CritiquedQueen[s].getName();
+                if(s!=CritiquedQueen.length-2)
+                {
+                    critiquedtext +=", ";
+                }
+                else
+                {
+
+                }
+            }
+            else
+            {
+                critiquedtext += " and "+CritiquedQueen[s].getName(); 
+            }
+        }
+        Untucked.createBold(critiquedtext+" all grab a drink and sit down with safes queens.");
+    }
+    Untucked.createHorizontalLine();
+    let howmanyev = (randomNumber(1,6));
+    for(let even = 0; even<howmanyev ; even++)
+    {
+        GenerateUntuckedEvent(currentCast, Untucked);
+    }
+
+    if(randomNumber(0,5)>=4)
+    {
+        let randomMessage = [
+            ", we are so proud of what you have became. We love you.",
+            ", I remember when you were just a kid, you were so full of life! And now look at you, bring back the crown home. We love you.",
+            ", we are really happy. You're out there living your dream! Show them what you are capable of, love you!"
+        ]
+        Untucked.createHorizontalLine();
+        let message = randomNumber(0,bottomQueens.length-1);
+        Untucked.createBold("Queens please sit down we have a message for someone!");
+        Untucked.createImage(bottomQueens[message].image);
+        Untucked.createBold("\""+bottomQueens[message].getName()+randomMessage[randomNumber(0,randomMessage.length-1)]+"\"");
+    }
+
+    if (uk3Premiere && episodeCount == 1)
+        Untucked.createButton("Proceed", "uk3PremiereJudging()");
+    else if (top3 || top4)
+        Untucked.createButton("Proceed", "winAndBtm2()");
+    else if (all_stars)
+        Untucked.createButton("Proceed", "top2AndBtm()");
+    else if (lipsync_assassin)
+        Untucked.createButton("Proceed", "topAndBtm()");
+    else if (team)
+        Untucked.createButton("Proceed", "teamWinAndBtm2()");
 }
 //QUEENS:
 //SEASON 1: 
@@ -8656,6 +10157,16 @@ class Scene {
         p.appendChild(big);
         this._MainBlock.appendChild(p);
     }
+
+    createBigTextColored(text,color) {
+        let big = document.createElement("big");
+        let p = document.createElement("p");
+        p.setAttribute("style", `color: ${color};`);
+        big.innerHTML = text;
+        p.appendChild(big);
+        this._MainBlock.appendChild(p);
+    }
+
     createParagraph(text, id = '') {
         let p = document.createElement("p");
         p.innerHTML = text;
@@ -8686,6 +10197,12 @@ class Scene {
         let image = document.createElement("img");
         image.src = source;
         image.setAttribute("style", `border-color: ${color}; width: 105px; height: 105px;`);
+        this._MainBlock.appendChild(image);
+    }
+    createImageBW(source, color = "black") {
+        let image = document.createElement("img");
+        image.src = source;
+        image.setAttribute("style", `border-color: ${color}; width: 105px; height: 105px;-webkit-filter: grayscale(100%);filter: grayscale(100%);`);
         this._MainBlock.appendChild(image);
     }
 }
