@@ -97,12 +97,13 @@ let entrancelineres = [
 ];
 
 class Event{
-    constructor(Queen1, Queen2, TypeOfChallenge, Event)
+    constructor(Queen1, Queen2, TypeOfChallenge, Event, Episode)
     {
         this.firstqueen = Queen1;
         this.secondqueen = Queen2;
         this.challenge = TypeOfChallenge;
         this.event = Event;
+        this.episodeon = Episode;
     }
 
     getEvent()
@@ -112,6 +113,7 @@ class Event{
         arrayEvent.push(this.secondqueen);
         arrayEvent.push(this.challenge);
         arrayEvent.push(this.event);
+        arrayEvent.push(this.episodeon);
         return(arrayEvent);
     }
 }
@@ -6771,21 +6773,23 @@ function asLipSyncResult(malus1,malus2)
 
 let assasintable = [];
 let assasinlipstick = [];
+let assassin;
+let backToWinner;
+
 function lsaLipSync() {
     let screen = new Scene();
     screen.clean();
     document.body.style.backgroundImage = "url('image/stage.webp')";
     screen.createHeader("It's time to ruveal...");
-    let backToWinner = false;
-    let assassin = allQueens[randomNumber(0, allQueens.length - 1)];
+    backToWinner = false;
+    assassin = allQueens[randomNumber(0, allQueens.length - 1)];
     bottomQueens.sort((a, b) => b.votes - a.votes);
     if (bottomQueens[0].votes == bottomQueens[1].votes) {
         backToWinner = true;
-        for (let i = 0; i < bottomQueens.length; i++) {
-            if (top2[0].lipstick.getName() == bottomQueens[i].getName()) {
-                assassin.lipstick = bottomQueens[i];
-            }
-        }
+                assassin.lipstick = bottomQueens[0];
+                assassin.secondlipstick = bottomQueens[1];
+                assassin.reallipstick = top[0].lipstick;
+
     } else {
         assassin.lipstick = bottomQueens[0];
     }
@@ -6877,7 +6881,7 @@ function lsaLipSync() {
                 break;
         }
     }
-    screen.createButton("Proceed","lsaLipSyncResult(+"+malus1+","+malus2+")");
+    screen.createButton("Proceed","lsaLipSyncResult("+malus1+","+malus2+")");
 }
 
 function lsaLipSyncResult(malus1,malus2)
@@ -6896,14 +6900,22 @@ function lsaLipSyncResult(malus1,malus2)
     screen.createHorizontalLine();
     screen.createImage(top2[0].image, "darkblue");
     screen.createBold(top2[0].getName() + ", you're a winner baby!");
-    if (top2[0] == assassin) {
+    if (top2[0].getName() == assassin.getName() ) {
         screen.createImage(top2[1].image, "cyan");
         screen.createParagraph(top2[1].getName() + ", you're safe.");
         top2[1].addToTrackRecord("WIN ");
         top2[1].favoritism += 5;
         top2[1].ppe += 5;
-        assasintable.push(top2[0].getName());
-        assasinlipstick.push(top2[0].lipstick.getName());
+        if(backToWinner==true)
+        {
+            assasintable.push(top2[0].getName());
+            assasinlipstick.push(top2[0].lipstick.getName()+" & "+top2[0].secondlipstick.getName());
+        }
+        else
+        {
+            assasintable.push(top2[0].getName());
+            assasinlipstick.push(top2[0].lipstick.getName());
+        }
         assasintable.push(top2[1].getName());
         assasinlipstick.push(top2[1].lipstick.getName());
     }
@@ -6920,11 +6932,23 @@ function lsaLipSyncResult(malus1,malus2)
     }
     allQueens.splice(allQueens.indexOf(assassin), 1);
     screen.createHorizontalLine();
-    if (backToWinner && top2[0].getName() == assassin.getName()) {
-        screen.createBold("As there was a tie in the voting, the power returns to the challenge winner!");
-        chooseReasoning(top2[1].getName(), top2[1].lipstick.getName());
+    if (backToWinner && top2[0] == assassin) {
+        screen.createBold("Who did the group voted to get the chop ?");
+        screen.createImage(assassin.image);
+        screen.createBold("The group has chosen "+top2[0].lipstick.getName()+" to get the chop tonight.");
+        screen.createImage(Ru.image);
+        screen.createBold(`${top2[0].lipstick.getName()}, you will always be an All Sta-`);
+        screen.createImage(assassin.image);
+        screen.createBold('Wait Ru! I have another lipstick.');
+        screen.createBold("The group has also chosen "+top2[0].secondlipstick.getName()+" to get the chop tonight.");
+        screen.createImage(Ru.image);
+        screen.createBold('Well in that case, the power of elimination comes back to the top all-star.');
+        screen.createBold(top2[1].getName()+', which queen have you chosen to get the chop ?');
+        screen.createImage(top2[1].image);
+        screen.createBold('I have chosen to send '+top2[1].lipstick.getName()+' to send home tonight.');
+        assassin.lipstick = assassin.reallipstick;
     }
-    if (top2[1].getName() == assassin.getName()) {
+    if (top2[1].getName()  == assassin.getName() ) {
         chooseReasoning(top2[0].getName(), top2[0].lipstick.getName());
     }
     screen.createImage(top2[0].lipstick.image, "red");
@@ -7040,6 +7064,8 @@ class Queen {
         this.trackRecord = [];
         this.relationships = [];
         this.alliances = [];
+        this.secondlipstick;
+        this.reallipstick;
         this.runwayScore = 0;
         this.lipsyncScore = 0;
         this.performanceScore = 0;
@@ -7452,7 +7478,19 @@ function GenerateUntuckedEvent(Queens, Untucked)
                     let rdmtopqueen = randomNumber(0,topQueens.length-1);
                     let rdmsafequeen = randomNumber(0,currentCast.length-1);
                     let rdmbtmqueen = randomNumber(0,bottomQueens.length-1);
-
+                    let same = true;
+                    while(same == true)
+                    {
+                        let rdmsafequeen = randomNumber(0,currentCast.length-1);
+                        if(currentCast[rdmsafequeen].getName()==bottomQueens[rdmbtmqueen].getName())
+                        {
+                            same = true;
+                        }
+                        else
+                        {
+                            same = false;
+                        }
+                    }
                     Untucked.createImage(currentCast[rdmsafequeen].image);
                     Untucked.createImage(bottomQueens[rdmbtmqueen].image);
                     let response = randomNumber(0,1);
@@ -7729,7 +7767,9 @@ function GetCompliment()
         ', this was so good. I loved it! You looked beautiful while doing something unexpected. Good job on the surprise tonight.',
         ', in the beginning, i could see you getting in your head, but once you got the hang of it, you knocked it out of the park.',
         ', we can tell, you prepared. This was really great.',
-        ', you made something that we didn\'t expect a talent. And it worked! You were fabulous.'
+        ', you made something that we didn\'t expect a talent. And it worked! You were fabulous.',
+        ', you showed up and you showed out. It was original and well executed! Good job.',
+        ', you had a really great show! It looked seamless, I can\'t even find one critique!'
     ];
 
     switch(episodeChallenges[episodeChallenges.length-1])
@@ -7810,7 +7850,9 @@ function GetCritiques()
         ', you had such a good start, but then you faded into the background which was not good...',
         ', each time you came onto the screen, you looked more lost than the last time.',
         ', I feel like you were lacking confidence, and it showed.',
-        ', I feel like you wanted to stand out so much, you stood out for the wrong reasons.'
+        ', I feel like you wanted to stand out so much, you stood out for the wrong reasons.',
+        ', you could probably went down the road of so bad, it\'s you really missed that opportunity.',
+        ', I felt like you struggled a lot with the acting, and it showed on the final product.'
     ];
 
     let standupc =[
@@ -8432,6 +8474,11 @@ function ASUntucked()
         for (let j = 0; j < bottomQueens.length; j++) {
             Untucked.createImage(top2[0].image, "cyan");
             Untucked.createImage(bottomQueens[j].image);
+                        if(top2[0].IsAlliedTo(bottomQueens[j])==true)
+                        {
+                            Untucked.createBold(top2[0].getName() + " tells "+bottomQueens[j].getName()+" they will be safe because of their alliance.");
+                            top1choice.splice(top1choice.indexOf(bottomQueens[j]),1); 
+                        }
                         if((top2[0].getFirstSeason() == bottomQueens[j].getFirstSeason()) && episodeCount == 1)
                         {
                             Untucked.createBold(top2[0].getName() + " tells "+bottomQueens[j].getName()+" that it's unfornate that "+bottomQueens[j].getName()+" had to be in the bottom.");
@@ -8736,7 +8783,7 @@ let naomi = new Queen("Naomi Smalls", 9, 7, 10, 14, 10, 12, 11, "Naomi",false, "
 let naysha = new Queen("Naysha Lopez", 6, 4, 4, 4, 3, 6, 7, "Naysga",false, "S8");
 let robbie = new Queen("Robbie Turner", 4, 5, 6, 4, 3, 6, 6, "Robbie",false, "S8");
 let thorgy = new Queen("Thorgy Thor", 14, 9, 6, 9, 13, 9, 8, "Thorgy",false, "S8");
-let us_season8 = [/*acid, bob, chichi, cynthia,*/ dax, derrick, kim, laila, naomi, naysha, robbie, thorgy];
+let us_season8 = [acid, bob, chichi, cynthia, dax, derrick, kim, laila, naomi, naysha, robbie, thorgy];
 //ALL STARS 2:
 let allstars_2 = [adore, alaska, alyssa, coco, detox, ginger, katya, phiphi, roxxxy, tatianna];
 //SEASON 9: 
@@ -9006,6 +9053,7 @@ let italia = [ava, divinity, elecktra, enorma, farida, ivana, riche, luquisha];
 //SPECIAL 
 let pangina = new Queen("Pangina Heals", 9, 7, 14, 11, 8, 13, 14, "Pangina");
 let international_as = [baga, blu, cheryl, janey, jimbo, jujubee, lemon, monique, pangina];
+let canvsworld = [anita, icesis, kendall, rajah, rita, silky, stephanie, vanity, victoriaS];
 //all possible queens:
 let allCustomQueens = [];
 if (localStorage.getItem("customQueens") != null)
