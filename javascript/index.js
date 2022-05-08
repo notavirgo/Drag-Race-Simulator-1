@@ -1,4 +1,8 @@
 "use strict";
+
+let setls = 0;
+let setlssong = [];
+
 let readsbase=[
     ", how nice of you to save the oceans by injecting the plastic into yourself! And using the rest of the trash for your drag.",
     ", look at how short is this skirt! It is supposed to be the same size as your talent ?",
@@ -338,17 +342,23 @@ class MiniChallenge {
 }
 
 class Judge{
-    constructor(name, image = "noimage"){
+    constructor(name, image = "noimage", songs = []){
         this.name = name;
         if (image == "noimage")
             this.image = "image/queens/noimage.jpg";
         else
             this.image = "image/judges/" + image + ".webp";
+        this.songs = songs;
     }
 
     getName()
     {
         return(this.name);
+    }
+
+    getSongs()
+    {
+        return(this.songs);
     }
 }
 
@@ -356,15 +366,15 @@ let Ru = new Judge("Rupaul","Rupaul");
 let Michelle = new Judge("Michelle Visage","Michelle");
 let Carson = new Judge("Carson Kressley", "Carson");
 let Ross = new Judge("Ross Mathews", "Ross");
-let QueenB = new Judge("Béyoncé","QueenB");
-let Latoya = new Judge("La Toya Jackson","Latoya");
-let NickiM = new Judge("Nicki Minaj","NickiM");
-let KylieM = new Judge("Kylie Minogue","Kylie");
-let Jlo = new Judge("Jennifer Lopez","JLo");
-let Madonna = new Judge("Madonna","Madonna");
+let QueenB = new Judge("Béyoncé","QueenB", ["Dangerously in Love by Béyoncé","Naughty Girl by Béyoncé","Freakum Dress by Béyoncé"]);
+let Latoya = new Judge("La Toya Jackson","Latoya", ["If you feel the funk by La Toya Jackson","Shake Your Body by La Toya Jackson","Ain't Nobody Loves You by La Toya Jackson"]);
+let NickiM = new Judge("Nicki Minaj","NickiM", ["The Night Is Still Young by Nicki Minaj","Super Bass by Nicki Minaj","Fly by Nicki Minaj (ft. Rihanna)"]);
+let KylieM = new Judge("Kylie Minogue","Kylie", ["The Loco-Motion by Kylie Minogue","Can't Get You Out Of My Head by Kylie Minogue","Magic by Kylie Minogue"]);
+let Jlo = new Judge("Jennifer Lopez","JLo", ["Jenny From The Block by Jennifer Lopez","Ain't Your Mama by Jennifer Lopez","Love of My Life by Jennifer Lopez"]);
+let Madonna = new Judge("Madonna","Madonna", ["Hung Up by Madonna","Material Girl by Madonna","Take A Bow by Madonna"]);
 let Merle = new Judge("Merle Ginsberg","Merle");
-let Lizzo = new Judge("Lizzo","Lizzo");
-let Megan = new Judge("Megan Thee Stallion","Megan");
+let Lizzo = new Judge("Lizzo","Lizzo",["Cuz I Love You by Lizzo","It's About Damn Time by Lizzo","Rumors by Lizzo (ft. Cardi B)"]);
+let Megan = new Judge("Megan Thee Stallion","Megan",["Body by Megan Thee Staillion","Big Ole Freak by MEgan Thee Stallion","Savage by Megan Thee Stallion"]);
 let AndrewG = new Judge("Andrew Garfield","Andrew");
 let Zendaya = new Judge("Zendaya","Zendaya");
 let Timothee = new Judge("Timothée Chalamet","Timothee");
@@ -372,42 +382,42 @@ let LadyB = new Judge("Lady Bunny","LadyB");
 let KimK = new Judge("Kim Kardashian","KimK");
 let KylieJ = new Judge("Kylie Jenner","Kylie Jenner");
 let KendallJ = new Judge("Kendall Jenner","KendallJ");
-let LadyG = new Judge("Lady Gaga","LadyG");
+let LadyG = new Judge("Lady Gaga","LadyG",["Gypsy by Lady Gaga","G.U.Y by Lady Gaga","Donatella by Lady Gaga"]);
 let LonyL = new Judge("Lony Love","LonyL");
 let Rhys = new Judge("Rhys Nicholson","Rhys");
 let JeremyS = new Judge("Jeremy Scott","JeremyS");
 let DonatellaV = new Judge("Donatella Versace","DonatellaV");
 
-let MariahC = new Judge("Mariah Carey","Mariah");
-let Cher = new Judge("Cher","Cher");
-let Miley = new Judge("Miley Cyrus","Miley");
-let JessieJ = new Judge("Jessie J","Jessie");
+let MariahC = new Judge("Mariah Carey","Mariah",["Without You by Mariah Carey","Hero by Mariah Carey","Heartbreaker by Mariah Carey (ft. Jay-Z)"]);
+let Cher = new Judge("Cher","Cher",["Heart Of Stone by Cher","(This Is) A Song For The Lonely by Cher","One By One by Cher"]);
+let Miley = new Judge("Miley Cyrus","Miley",["Malibu by Miley Cyrus","Adore You by Miley Cyrus","When I Look At You by Miley Cyrus"]);
+let JessieJ = new Judge("Jessie J","Jessie",["Who Are You by Jessie J","Nobody's Perfect by Jessie J","Price Tag by Jessie J (ft B.O.B.)"]);
 let Howie = new Judge("Howie Mandel","Howie");
-let Demi = new Judge("Demi Lovato","Demi");
-let Saweetie = new Judge("Saweetie","Saweetie");
-let KimP = new Judge("Kim Petras","KimP");
-let AvaM = new Judge("Ava Maxx","Ava");
-let Rihanna = new Judge("Rihanna","Rihanna");
+let Demi = new Judge("Demi Lovato","Demi",["Heart Attack by Demi Lovato","Stone Cold by Demi Lovato","Confident by Demi Lovato"]);
+let Saweetie = new Judge("Saweetie","Saweetie",["Closer by Saweetie (ft H.E.R.)","Best Friends by Saweetie (ft. Doja Cat)","My Type by SAweetie"]);
+let KimP = new Judge("Kim Petras","KimP",["Future Starts Now by Kim Petras","Coconuts by Kim Petras","Hillside Boys by Kim Petras"]);
+let AvaM = new Judge("Ava Max","Ava",["Naked by Ava Max","Kings & Queens by Ava Max","Torn by Ava Max"]);
+let Rihanna = new Judge("Rihanna","Rihanna",["Diamonds by Rihanna","Stay by Rihanna (ft. Mikky Ekko)","Umbrella by Rihanna"]);
 let Liza = new Judge("Liza Minelli","Liza");
-let Dolly = new Judge("Dolly Parton","Dolly");
+let Dolly = new Judge("Dolly Parton","Dolly",["Jolene by Dolly Parton","Heartbreaker by Dolly Parton","Yellow Roses by Dolly Parton"]);
 let Fran = new Judge("Fran Drescher","Fran");
-let Elton = new Judge("Elton John","Elton");
+let Elton = new Judge("Elton John","Elton",["Tiny Dancer by Elton John","Sacrifice by Elton John","Candle In The Wind by Elton John"]);
 let Barbara = new Judge("Barbara Streisand","BarbabaS");
-let Celine = new Judge("Céline Dion","Celine");
-let Janet = new Judge("Janet Jackson","Janet");
-let Charli = new Judge("Charli XCX","Charli");
-let Katy = new Judge("Katy Perry","Katy");
-let VictoriaB = new Judge("Victoria Beckham","Victoria");
-let Melanie = new Judge("Melanie Chrisholm","MelanieC");
-let MelB = new Judge("Melanie Brown","MelB");
-let Geri = new Judge("Geri Halliwell","Gerri");
-let Emma = new Judge("Emma Bunton","Emma");
+let Celine = new Judge("Céline Dion","Celine",["I Drove All Night by Céline Dion","All By Myself by Céline Dion","I'm Alive by Céline Dion"]);
+let Janet = new Judge("Janet Jackson","Janet",["Rhythm Nation by Janet Jackson","All For You by Janet Jackson","Together Again by Janet Jackson"]);
+let Charli = new Judge("Charli XCX","Charli",["Vroom Vroom by Charli XCX","1999 by Charli XCX","Lightning by Charli XCX"]);
+let Katy = new Judge("Katy Perry","Katy",["Unconditionally by Katy Perry","Teenage Dream by Katy Perry","Never Really Over by Katy Perry"]);
+let VictoriaB = new Judge("Victoria Beckham","Victoria",["Two Become One by The Spice Girls","Wannabe by The Spice Girls","Stop by The Spice Girls"]);
+let Melanie = new Judge("Melanie Chrisholm","MelanieC",["Two Become One by The Spice Girls","Wannabe by The Spice Girls","Stop by The Spice Girls"]);
+let MelB = new Judge("Melanie Brown","MelB",["Two Become One by The Spice Girls","Wannabe by The Spice Girls","Stop by The Spice Girls"]);
+let Geri = new Judge("Geri Halliwell","Gerri",["Two Become One by The Spice Girls","Wannabe by The Spice Girls","Stop by The Spice Girls"]);
+let Emma = new Judge("Emma Bunton","Emma",["Two Become One by The Spice Girls","Wannabe by The Spice Girls","Stop by The Spice Girls"]);
 let EmmaS = new Judge("Emma Stone","EmmaS");
 let KristenB = new Judge("Kristen Bell","KristenB");
 let Brad = new Judge("Brad Pitt","BradP");
 let Leonardo = new Judge("Leonardo Di Caprio","LeonardoD");
 let RyanG = new Judge("Ryan Gosling","RyanG");
-let Rina = new Judge("Rina Sawayama", "Rina");
+let Rina = new Judge("Rina Sawayama", "Rina",["Lucid by Rina Sawayama","Comme Des Garçons by Rina Sawayama","Tokyo Love Hotel by Rina Sawayama"]);
 
 
 let guestsjudges = [
@@ -684,6 +694,7 @@ class DesignChallenge {
         sortPerformances(currentCast);
     }
 }
+
 function designChallenge() {
     let challengeScreen = new Scene();
     challengeScreen.clean();
@@ -707,6 +718,7 @@ function designChallenge() {
     else
         episodeChallenges.push("Design");
 }
+
 class ImprovChallenge {
     generateDescription() {
         let description = document.querySelector("p#Description");
@@ -2169,7 +2181,7 @@ function newEpisode() {
                     }
                 }
             }
-            currentCast[i].ResetRelations();
+            
             for (let j = 0; j < currentCast.length; j++) {
                 currentCast[i].AddRelation(currentCast[j]);
                 if(currentCast[i].getFirstSeason() == currentCast[j].getFirstSeason())
@@ -4335,7 +4347,7 @@ function judging() {
         bottomQueens.push(currentCast[currentCast.length - 1]);
         bottomQueens.push(currentCast[currentCast.length - 2]);
         bottomQueens.push(currentCast[currentCast.length - 3]);
-        teamWinAndBtm2();
+        judgingScreen();
     }
     else if (currentCast.length == 4 && team) {
         //add 2 teams to the top and 2 teams to the bottom
@@ -4348,7 +4360,7 @@ function judging() {
         topQueens.push(currentCast[1]);
         bottomQueens.push(currentCast[currentCast.length - 1]);
         bottomQueens.push(currentCast[currentCast.length - 2]);
-        teamWinAndBtm2();
+        judgingScreen();
     }
     else if (currentCast.length == 3 && team) {
         //add 1 team to the top and 2 teams to the bottom
@@ -4360,7 +4372,7 @@ function judging() {
         topQueens.push(currentCast[0]);
         bottomQueens.push(currentCast[currentCast.length - 1]);
         bottomQueens.push(currentCast[currentCast.length - 2]);
-        teamWinAndBtm2();
+        judgingScreen();
     }
     else if (currentCast.length >= 9 && isTeamChallenge) {
         //add winning team to the top and bottom team to the bottom
@@ -4486,7 +4498,7 @@ function judging() {
                 bottomQueens.push(currentCast[i]);
             }
         }
-        topAndBtm();
+        judgingScreen();
     }
     else if (currentCast.length == 6) {
         currentCast.sort((a, b) => (a.performanceScore - b.performanceScore));
@@ -4494,12 +4506,7 @@ function judging() {
             topQueens.push(currentCast[i]);
             bottomQueens.push(currentCast[currentCast.length - (i + 1)]);
         }
-        if (top3 || top4)
-            winAndBtm2();
-        else if (all_stars)
-            judgingScreen();
-        else if (lipsync_assassin)
-            topAndBtm();
+        judgingScreen();
     }
     else if (currentCast.length == 5) {
         //add first 2 queens to the top and last 3 queens to the bottom:
@@ -4512,12 +4519,7 @@ function judging() {
             bottomQueens.push(currentCast[2]);
         bottomQueens.push(currentCast[3]);
         bottomQueens.push(currentCast[4]);
-        if (top3 || top4)
-            winAndBtm2();
-        else if (all_stars)
-            judgingScreen();
-        else if (lipsync_assassin)
-            topAndBtm();
+        judgingScreen();
     }
     else if (currentCast.length == 4) {
         //add first 2 queens to the top and last 2 queens to the bottom:
@@ -4526,12 +4528,7 @@ function judging() {
         topQueens.push(currentCast[1]);
         bottomQueens.push(currentCast[2]);
         bottomQueens.push(currentCast[3]);
-        if (top3 || top4)
-            winAndBtm2();
-        else if (all_stars)
-            judgingScreen();
-        else if (lipsync_assassin)
-            topAndBtm();
+        judgingScreen();
     }
 }
 function judgingS14LaLaPaRUZaScreen() {
@@ -5166,17 +5163,39 @@ function judgingScreen() {
     judgingScreen.createBold("Based on tonight's performances...");
     document.body.style.backgroundImage = "url('image/stage.webp')";
     if (team == true) {
+        if(currentCast>4)
+        {
         judgingScreen.createImage(topQueens[0].QueenA.image, "cyan");
         judgingScreen.createImage(topQueens[1].QueenA.image, "cyan");
         judgingScreen.createImage(topQueens[0].QueenB.image, "cyan");
         judgingScreen.createImage(topQueens[1].QueenB.image, "cyan");
+        }
+        else
+        {
+        judgingScreen.createImage(topQueens[0].QueenA.image, "cyan");
+        judgingScreen.createImage(topQueens[0].QueenB.image, "cyan");
+        }
+        if(currentCast.length>4)
+        {
         judgingScreen.createImage(bottomQueens[0].QueenB.image, "cyan");
         judgingScreen.createImage(bottomQueens[1].QueenB.image, "cyan");
         judgingScreen.createImage(bottomQueens[2].QueenB.image, "cyan");
         judgingScreen.createImage(bottomQueens[0].QueenA.image, "cyan");
         judgingScreen.createImage(bottomQueens[1].QueenA.image, "cyan");
         judgingScreen.createImage(bottomQueens[2].QueenA.image, "cyan");
-        judgingScreen.createBold(`${topQueens[0].getName()}, ${topQueens[1].getName()}, ${bottomQueens[0].getName()}, ${bottomQueens[1].getName()}, ${bottomQueens[2].getName()}, you represent the tops and bottoms of the week.`);
+        }
+        else
+        {
+        judgingScreen.createImage(bottomQueens[0].QueenB.image, "cyan");
+        judgingScreen.createImage(bottomQueens[1].QueenB.image, "cyan");
+        judgingScreen.createImage(bottomQueens[0].QueenA.image, "cyan");
+        judgingScreen.createImage(bottomQueens[1].QueenA.image, "cyan");
+        }
+        if(currentCast.length>4)
+            judgingScreen.createBold(`${topQueens[0].getName()}, ${topQueens[1].getName()}, ${bottomQueens[0].getName()}, ${bottomQueens[1].getName()}, ${bottomQueens[2].getName()}, you represent the tops and bottoms of the week.`);
+        else
+            judgingScreen.createBold(`${topQueens[0].getName()}, ${bottomQueens[0].getName()}, ${bottomQueens[1].getName()}, you represent the tops and bottoms of the week.`);
+
     }
     else {
         if (topQueens.length > bottomQueens.length) {
@@ -5655,21 +5674,233 @@ function showvotes() {
     }
     
 }
+function getLSConfessionals(FirstQ, SecondQ, screen)
+{
+    let firstpart = [
+        "No shade to ",
+        "I kind of don't want to lipsync against ",
+        "I cannot let ",
+        "I didn\'t want to be in this place, but ",
+        "I came here to win. I cannot let ",
+        "This is my chance to prove to the judges, I deserve to be here. Sorry "
+    ];
+
+    let secondpart = [
+        ", but you need to go home. I'm staying here.",
+        ", but I have to do it, to prove myself in this competition.",
+        " get in my way. This is MY chance.",
+        ", I have to lipsync, it's the game.",
+        " get in my way. Sorry, but you're going home.",
+        " but I cannot let you win this."
+    ]
+
+    let aslines = [
+        'This is my chance to prove myself to Ru.',
+        'I will do anything in my power to win this.',
+        "Being in the top 2, feels really great! Would be even better with that lipsync win.",
+        "This is my chance to prove myself. I'm not letting that slipping from my hands.",
+        "I firmly believe in the lipstick that I've picked. And if I don't win something that I don't want to might happen.",
+        "Come on give me this money!",
+        "Time to do what I do best, and it's to outperform."
+    ]
+
+    if(!all_stars && !lipsync_assassin)
+    {
+        if(currentCast[currentCast.indexOf(FirstQ)].GetRelation(SecondQ.getName())>2)
+        {
+            screen.createImage(FirstQ.image,"#fa57d9");
+            screen.createBold("\"It really sucks to have to lipsync against "+SecondQ.getName()+", but if I want to stay here it's going to have to happen.\"");
+            screen.createImage(SecondQ.image,"#fa57d9");
+            screen.createBold("\"I really don't want to lipsync against "+FirstQ.getName()+", but I've got to do what I need to do.\"");
+        }
+        else if(currentCast[currentCast.indexOf(FirstQ)].trackRecord[currentCast[currentCast.indexOf(FirstQ)].trackRecord.length-1]=="BTM 2" || currentCast[currentCast.indexOf(SecondQ)].trackRecord[currentCast[currentCast.indexOf(SecondQ)].trackRecord.length-1]=="BTM 2")
+        {
+            if(currentCast[currentCast.indexOf(FirstQ)].trackRecord[currentCast[currentCast.indexOf(FirstQ)].trackRecord.length-1]=="BTM 2")
+            {
+                screen.createImage(FirstQ.image,"#fa57d9");
+                screen.createBold("\"I was already in the bottom last week. I have to make a miracle happen.\"");
+            }
+            else
+            {
+                let rdmconf2 = randomNumber(0,secondpart.length-1);
+                screen.createImage(SecondQ.image,"#fa57d9");
+                screen.createBold("\""+firstpart[rdmconf2]+FirstQ.getName()+secondpart[rdmconf2]+"\"");
+            }
+
+            if(currentCast[currentCast.indexOf(SecondQ)].trackRecord[currentCast[currentCast.indexOf(SecondQ)].trackRecord.length-1]=="BTM 2")
+            {
+                screen.createImage(SecondQ.image,"#fa57d9");
+                screen.createBold("\"I was already in the bottom last week. I have to make a miracle happen.\"");
+            }
+            else
+            {
+                let rdmconf1 = randomNumber(0,firstpart.length-1);
+                screen.createImage(FirstQ.image,"#fa57d9");
+                screen.createBold("\""+firstpart[rdmconf1]+SecondQ.getName()+secondpart[rdmconf1]+"\"");
+            }
+        }
+        else
+        {
+        let rdmconf1 = randomNumber(0,firstpart.length-1);
+        let rdmconf2 = randomNumber(0,secondpart.length-1);
+        screen.createImage(FirstQ.image,"#fa57d9");
+        screen.createBold("\""+firstpart[rdmconf1]+SecondQ.getName()+secondpart[rdmconf1]+"\"");
+        screen.createImage(SecondQ.image,"#fa57d9");
+        screen.createBold("\""+firstpart[rdmconf2]+FirstQ.getName()+secondpart[rdmconf2]+"\"");
+        }
+    }
+    else if(all_stars)
+    {
+        let rdmconf1 = randomNumber(0,aslines.length-1);
+        let rdmconf2 = randomNumber(0,aslines.length-1);
+        screen.createImage(FirstQ.image,"#fa57d9");
+        screen.createBold("\""+aslines[rdmconf1]+"\"");
+        screen.createImage(SecondQ.image,"#fa57d9");
+        screen.createBold("\""+aslines[rdmconf2]+"\"");
+    }
+    else if(lipsync_assassin)
+    {
+        let rdmconf1 = randomNumber(0,aslines.length-1);
+        screen.createImage(FirstQ.image,"#fa57d9");
+        screen.createBold("\""+aslines[rdmconf1]+"\"");
+    }
+}
 let disqOrDept = false;
+
+function LipsyncEvent(Queen)
+{
+    let rdmevent = randomNumber(0,100);
+    if(rdmevent>=90)
+    {
+        switch(randomNumber(0,3)){
+            case 0:
+                return("LW");
+                break;
+            case 1:
+                return("LS");
+                break;
+            case 2:
+                return("EA");
+                break;
+            case 3:
+                return("FA");
+                break;
+            case 3:
+                return("NW");
+                break;
+        }
+    }
+    else
+    {
+        return("SM");
+    }
+}
 function lipSync() {
+    document.body.style.backgroundImage = "url('image/stage.webp')";
+    let malus1 = 0;
+    let malus2 = 0;
     for (let i = 0; i < bottomQueens.length; i++) {
         bottomQueens[i].getLipsync();
     }
     bottomQueens.sort((a, b) => (b.lipsyncScore - a.lipsyncScore));
     let screen = new Scene();
     screen.clean();
-    screen.createHeader("It's time...");
-    screen.createBold("For you to lip-sync... for your lives! Good luck, and don't fuck it up.");
+    screen.createHeader("On the mainstage...");
     lsSong();
+    screen.createBold("The time has come for you to lip-sync... for your lives! Good luck, and don't fuck it up.");
+    
     screen.createHorizontalLine();
+    screen.createBigText("In confessionals...");
+    screen.createHorizontalLine();
+    getLSConfessionals(bottomQueens[0],bottomQueens[1],screen);
+    screen.createHorizontalLine();
+    screen.createBigText("The music starts...");
+    screen.createHorizontalLine();
+    let evqueen1 = LipsyncEvent(bottomQueens[0]);
+    let evqueen2 = LipsyncEvent(bottomQueens[1]);
+    if(evqueen1 == "SM" && evqueen2 == "SM")
+    {
+        screen.createImage(bottomQueens[0].image);
+        screen.createImage(bottomQueens[1].image);
+        screen.createBold("The lipsync went with no fails from the queens.");
+    }
+    else
+    {
+        switch(evqueen1){
+            case"LW":
+                screen.createImage(bottomQueens[0].image);
+                screen.createBold(bottomQueens[0].getName()+" lost their wig during the lipsync.");
+                malus1 = 2;
+                break;
+            case"LS":
+                screen.createImage(bottomQueens[0].image);
+                screen.createBold(bottomQueens[0].getName()+" removed their shoes during the lipsync.");
+                malus1 = 3;
+                break;
+            case"EA":
+                screen.createImage(bottomQueens[0].image);
+                screen.createBold(bottomQueens[0].getName()+"'s outfit fell apart on stage.");
+                malus1 = 4;
+                break;
+            case"FA":
+                screen.createImage(bottomQueens[0].image);
+                screen.createBold(bottomQueens[0].getName()+" fell during the lipsync.");
+                malus1 = 5;
+                break;
+            case"NW":
+                screen.createImage(bottomQueens[0].image);
+                screen.createBold(bottomQueens[0].getName()+" doesn't know the words.");
+                malus1 = 6;
+                break;
+            case"SM":
+                screen.createImage(bottomQueens[0].image);
+                screen.createBold(bottomQueens[0].getName()+" didn't do any fails during their performance.");
+                break;
+        }
+
+        switch(evqueen2){
+            case"LW":
+                screen.createImage(bottomQueens[1].image);
+                screen.createBold(bottomQueens[1].getName()+" lost their wig during the lipsync.");
+                malus2 = 2;
+                break;
+            case"LS":
+                screen.createImage(bottomQueens[1].image);
+                screen.createBold(bottomQueens[1].getName()+" removed their shoes during the lipsync.");
+                malus2 = 3;
+                break;
+            case"EA":
+                screen.createImage(bottomQueens[1].image);
+                screen.createBold(bottomQueens[1].getName()+"'s outfit fell apart on stage.");
+                malus2 = 4;
+                break;
+            case"FA":
+                screen.createImage(bottomQueens[1].image);
+                screen.createBold(bottomQueens[1].getName()+" fell during the lipsync.");
+                malus2 = 5;
+                break;
+            case"NW":
+                screen.createImage(bottomQueens[1].image);
+                screen.createBold(bottomQueens[1].getName()+" doesn't know the words.");
+                malus2 = 6;
+                break;
+            case"SM":
+                screen.createImage(bottomQueens[1].image);
+                screen.createBold(bottomQueens[1].getName()+" didn't do any fails during their performance.");
+                break;
+        }
+    }
+    screen.createButton("Proceed","lipSyncResult(+"+malus1+","+malus2+")");
+}
+
+function lipSyncResult(malus1,malus2)
+{
+    let screen = new Scene();
+    screen.clean();
     screen.createBold("I've made my decision.");
-    let score1 = bottomQueens[0].lipsyncScore - bottomQueens[0].favoritism + bottomQueens[0].unfavoritism;
-    let score2 = bottomQueens[1].lipsyncScore - bottomQueens[1].favoritism + bottomQueens[1].unfavoritism;
+    screen.createHorizontalLine();
+    let score1 = (bottomQueens[0].lipsyncScore - bottomQueens[0].favoritism + bottomQueens[0].unfavoritism) +malus1;
+    let score2 = (bottomQueens[1].lipsyncScore - bottomQueens[1].favoritism + bottomQueens[1].unfavoritism) +malus2;
     if (thirdqueen && currentCast.length > 5) {
         thirdqueen = false;
         if (score1 > 7 && score2 > 7 && randomNumber(0, 100) <= 50 && noDouble == false && currentCast.length > 5) {
@@ -6009,7 +6240,7 @@ function lipSync() {
     }
     else 
     {
-        if(eliminatedCast[0].episodesOn==episodeChallenges.length)
+        if(eliminatedCast.length != 0 && eliminatedCast[0].trackRecord[eliminatedCast[0].trackRecord.length-1]=="ELIM")
             screen.createButton("Proceed","Notes()");
         else
         {
@@ -6019,7 +6250,7 @@ function lipSync() {
             screen.createButton("Proceed", "newEpisode()");
         }
     }
-}
+} 
 function Notes()
 {
     let notes =[
@@ -6063,17 +6294,16 @@ function Notes()
                 console.log(queensnote.length);
                 let randnotes = randomNumber(0,notes.length-1);
                 let whoqueen = randomNumber(0,queensnote.length-1);
-                screen.createImage(eliminatedCast[0].image,'#ff4f2b');
+                screen.createImage(eliminatedCast[i].image,'#ff4f2b');
                 screen.createImage(queensnote[whoqueen].image);
-                screen.createBold(eliminatedCast[0].getName()+notes[randnotes]+queensnote[whoqueen].getName()+".");
+                screen.createBold(eliminatedCast[i].getName()+notes[randnotes]+queensnote[whoqueen].getName()+".");
                 queensnote.splice(whoqueen,1);
             }
             if(howmanynotes==0)
             {
                 screen.createBold("No one left any notes for "+eliminatedCast[i].getName()+".");
             }
-
-            
+            screen.createHorizontalLine();
         }
         screen.createHorizontalLine();
         screen.createImageBW(eliminatedCast[0].image);
@@ -6199,17 +6429,112 @@ function teamLipSync() {
         screen.createButton("Proceed", "newEpisode()");
 }
 function asLipSync() {
-    for (let i = 0; i < top2.length; i++) {
-        top2[i].getASLipsync();
-    }
-    top2.sort((a, b) => (b.lipsyncScore - a.lipsyncScore));
+    document.body.style.backgroundImage = "url('image/stage.webp')";
     let screen = new Scene();
     screen.clean();
-    screen.createHeader("It's time...");
-    screen.createBold("For you to lip-sync... for your legacy! Good luck, and don't fuck it up.");
+    screen.createHeader("On the main stage...");
+    screen.createBold("It's time for you to lip-sync... for your legacy! Good luck, and don't fuck it up.");
     lsSong();
     screen.createHorizontalLine();
+    screen.createBigText("In the confessional...");
+    screen.createHorizontalLine();
+    getLSConfessionals(top2[0],top2[1],screen);
+    screen.createHorizontalLine();
+    screen.createBigText("The music starts...");
+    screen.createHorizontalLine();
+    let evqueen1 = LipsyncEvent(top2[0]);
+    let evqueen2 = LipsyncEvent(top2[1]);
+    let malus1 = 0;
+    let malus2 = 0;
+    if(evqueen1 == "SM" && evqueen2 == "SM")
+    {
+        screen.createImage(top2[0].image);
+        screen.createImage(top2[1].image);
+        screen.createBold("The lipsync went with no fails from the queens.");
+    }
+    else
+    {
+        switch(evqueen1){
+            case"LW":
+                screen.createImage(top2[0].image);
+                screen.createBold(top2[0].getName()+" lost their wig during the lipsync.");
+                malus1 = 2;
+                break;
+            case"LS":
+                screen.createImage(top2[0].image);
+                screen.createBold(top2[0].getName()+" removed their shoes during the lipsync.");
+                malus1 = 3;
+                break;
+            case"EA":
+                screen.createImage(top2[0].image);
+                screen.createBold(top2[0].getName()+"'s outfit fell apart on stage.");
+                malus1 = 4;
+                break;
+            case"FA":
+                screen.createImage(top2[0].image);
+                screen.createBold(top2[0].getName()+" fell during the lipsync.");
+                malus1 = 5;
+                break;
+            case"NW":
+                screen.createImage(top2[0].image);
+                screen.createBold(top2[0].getName()+" doesn't know the words.");
+                malus1 = 6;
+                break;
+            case"SM":
+                screen.createImage(top2[0].image);
+                screen.createBold(top2[0].getName()+" didn't do any fails during their performance.");
+                break;
+        }
+
+        switch(evqueen2){
+            case"LW":
+                screen.createImage(top2[1].image);
+                screen.createBold(top2[1].getName()+" lost their wig during the lipsync.");
+                malus2 = 2;
+                break;
+            case"LS":
+                screen.createImage(top2[1].image);
+                screen.createBold(top2[1].getName()+" removed their shoes during the lipsync.");
+                malus2 = 3;
+                break;
+            case"EA":
+                screen.createImage(top2[1].image);
+                screen.createBold(top2[1].getName()+"'s outfit fell apart on stage.");
+                malus2 = 4;
+                break;
+            case"FA":
+                screen.createImage(top2[1].image);
+                screen.createBold(top2[1].getName()+" fell during the lipsync.");
+                malus2 = 5;
+                break;
+            case"NW":
+                screen.createImage(top2[1].image);
+                screen.createBold(top2[1].getName()+" doesn't know the words.");
+                malus2 = 6;
+                break;
+            case"SM":
+                screen.createImage(top2[1].image);
+                screen.createBold(top2[1].getName()+" didn't do any fails during their performance.");
+                break;
+        }
+    }
+    screen.createButton("Proceed","asLipSyncResult(+"+malus1+","+malus2+")");
+}
+
+function asLipSyncResult(malus1,malus2)
+{
+    let screen = new Scene();
+    screen.clean();
+    screen.createHeader("I have made my decision.");
+    for (let i = 0; i < top2.length; i++) {
+        if(i==1)
+            top2[i].getASLipsync()+malus1;
+        else
+            top2[i].getASLipsync()+malus2;  
+    }
+    top2.sort((a, b) => (b.lipsyncScore - a.lipsyncScore));
     screen.createBold("Ladies, I've made my decision...");
+    screen.createHorizontalLine();
     if (top2[0].lipsyncScore == top2[1].lipsyncScore && top2[0].lipsyncScore > 6 && top2[1].lipsyncScore > 6 && currentCast.length > 5) {
         screen.createImage(top2[0].image, "darkblue");
         screen.createImage(top2[1].image, "darkblue");
@@ -6443,11 +6768,13 @@ function asLipSync() {
     else
         screen.createButton("Proceed", "newEpisode()");
 }
+
 let assasintable = [];
 let assasinlipstick = [];
 function lsaLipSync() {
     let screen = new Scene();
     screen.clean();
+    document.body.style.backgroundImage = "url('image/stage.webp')";
     screen.createHeader("It's time to ruveal...");
     let backToWinner = false;
     let assassin = allQueens[randomNumber(0, allQueens.length - 1)];
@@ -6468,10 +6795,105 @@ function lsaLipSync() {
     screen.createParagraph("Now, it's time for you to lip-sync... for your legacy!");
     lsSong();
     screen.createHorizontalLine();
+    screen.createBigText("In the confessional...");
+    screen.createHorizontalLine();
+    getLSConfessionals(top2[0],top2[1],screen);
+    screen.createHorizontalLine();
+    screen.createBigText("The music starts...");
+    screen.createHorizontalLine();
+    let evqueen1 = LipsyncEvent(top2[0]);
+    let evqueen2 = LipsyncEvent(top2[1]);
+    let malus1 = 0;
+    let malus2 = 0; 
+    if(evqueen1 == "SM" && evqueen2 == "SM")
+    {
+        screen.createImage(top2[0].image);
+        screen.createImage(top2[1].image);
+        screen.createBold("The lipsync went with no fails from the queens.");
+    }
+    else
+    {
+        switch(evqueen1){
+            case"LW":
+                screen.createImage(top2[0].image);
+                screen.createBold(top2[0].getName()+" lost their wig during the lipsync.");
+                malus1 = 2;
+                break;
+            case"LS":
+                screen.createImage(top2[0].image);
+                screen.createBold(top2[0].getName()+" removed their shoes during the lipsync.");
+                malus1 = 3;
+                break;
+            case"EA":
+                screen.createImage(top2[0].image);
+                screen.createBold(top2[0].getName()+"'s outfit fell apart on stage.");
+                malus1 = 4;
+                break;
+            case"FA":
+                screen.createImage(top2[0].image);
+                screen.createBold(top2[0].getName()+" fell during the lipsync.");
+                malus1 = 5;
+                break;
+            case"NW":
+                screen.createImage(top2[0].image);
+                screen.createBold(top2[0].getName()+" doesn't know the words.");
+                malus1 = 6;
+                break;
+            case"SM":
+                screen.createImage(top2[0].image);
+                screen.createBold(top2[0].getName()+" didn't do any fails during their performance.");
+                break;
+        }
+
+        switch(evqueen2){
+            case"LW":
+                screen.createImage(top2[1].image);
+                screen.createBold(top2[1].getName()+" lost their wig during the lipsync.");
+                malus2 = 2;
+                break;
+            case"LS":
+                screen.createImage(top2[1].image);
+                screen.createBold(top2[1].getName()+" removed their shoes during the lipsync.");
+                malus2 = 3;
+                break;
+            case"EA":
+                screen.createImage(top2[1].image);
+                screen.createBold(top2[1].getName()+"'s outfit fell apart on stage.");
+                malus2 = 4;
+                break;
+            case"FA":
+                screen.createImage(top2[1].image);
+                screen.createBold(top2[1].getName()+" fell during the lipsync.");
+                malus2 = 5;
+                break;
+            case"NW":
+                screen.createImage(top2[1].image);
+                screen.createBold(top2[1].getName()+" doesn't know the words.");
+                malus2 = 6;
+                break;
+            case"SM":
+                screen.createImage(top2[1].image);
+                screen.createBold(top2[1].getName()+" didn't do any fails during their performance.");
+                break;
+        }
+    }
+    screen.createButton("Proceed","lsaLipSyncResult(+"+malus1+","+malus2+")");
+}
+
+function lsaLipSyncResult(malus1,malus2)
+{
+    let screen = new Scene();
+    screen.clean();
+    screen.createHeader("I have made my decision.");
     for (let i = 0; i < top2.length; i++) {
-        top2[i].getASLipsync();
+        if(i==1)
+            top2[i].getASLipsync()+malus1;
+        else
+            top2[i].getASLipsync()+malus2;  
     }
     top2.sort((a, b) => (b.lipsyncScore - a.lipsyncScore));
+    screen.createBold("Ladies, I've made my decision...");
+    screen.createHorizontalLine();
     screen.createImage(top2[0].image, "darkblue");
     screen.createBold(top2[0].getName() + ", you're a winner baby!");
     if (top2[0] == assassin) {
@@ -6566,7 +6988,7 @@ class Relation {
     constructor(Queen)
     {
         this.queen = Queen;
-        this.point = 0;
+        this.point = 1;
         this.status = "Neutral"
     }
 
@@ -7589,6 +8011,12 @@ function Critiques()
     for (let j =0; j<judgingpanel.length; j++)
     {
         MS.createImage(judgingpanel[j].image);
+        if(judgingpanel[j].getSongs().length!=0)
+        {
+            setls = 1;
+            for(let s =0; s<judgingpanel[j].getSongs().length; s++)
+                setlssong.push(judgingpanel[j].getSongs()[s]);
+        }
     }
     MS.createBold(judgetext);
     MS.createHorizontalLine();
@@ -7640,7 +8068,7 @@ function Critiques()
     }
 
     let whoshouldgohome = false;
-    if( randomNumber(0,10)==10 && currentCast.length<=7)
+    if( randomNumber(0,10)==10 && currentCast.length<=7 && !all_stars && !lipsync_assassin)
     {
         whoshouldgohome = true;
     }
@@ -7667,9 +8095,9 @@ function Critiques()
             let randombtm = randomNumber(0,bottomQueens.length-1);
             MS.createImage(CritiQueens[i].image);
             MS.createImage(bottomQueens[randombtm].image,"#e33650");
-            if(randombtm == i)
+            if(CritiQueens[i].getName() == bottomQueens[randombtm].getName())
             {
-                MS.createBold("\""+bottomQueens[randombtm].getName()+", because i cannot lie to you all, and say that I don't deserve to lipsync.\"");
+                MS.createBold("\""+bottomQueens[randombtm].getName()+", because i cannot lie to you all, and say that I don't deserve to go home tonight.\"");
             }
             else
             {
@@ -7939,6 +8367,7 @@ function ASUntucked()
     }
     else
     {
+        let fally = false;
         if(currentCast.length!=CritiQueens.length)
         {
             for (let i = 0; i < CritiQueens.length; i++)
@@ -8307,7 +8736,7 @@ let naomi = new Queen("Naomi Smalls", 9, 7, 10, 14, 10, 12, 11, "Naomi",false, "
 let naysha = new Queen("Naysha Lopez", 6, 4, 4, 4, 3, 6, 7, "Naysga",false, "S8");
 let robbie = new Queen("Robbie Turner", 4, 5, 6, 4, 3, 6, 6, "Robbie",false, "S8");
 let thorgy = new Queen("Thorgy Thor", 14, 9, 6, 9, 13, 9, 8, "Thorgy",false, "S8");
-let us_season8 = [acid, bob, chichi, cynthia, dax, derrick, kim, laila, naomi, naysha, robbie, thorgy];
+let us_season8 = [/*acid, bob, chichi, cynthia,*/ dax, derrick, kim, laila, naomi, naysha, robbie, thorgy];
 //ALL STARS 2:
 let allstars_2 = [adore, alaska, alyssa, coco, detox, ginger, katya, phiphi, roxxxy, tatianna];
 //SEASON 9: 
@@ -10208,9 +10637,19 @@ class Scene {
 }
 function lsSong() {
     let screen = new Scene();
-    let song = randomNumber(0, lsSongs.length - 1);
-    screen.createBold(`The lip-sync song is... ${lsSongs[song]}!`);
-    lsSongs.splice(song, 1);
+    if(setls == 0)
+    {
+        let song = randomNumber(0, lsSongs.length - 1);
+        screen.createBold(`The lip-sync song is... ${lsSongs[song]}!`);
+        lsSongs.splice(song, 1);
+    }
+    else
+    {
+        let song = randomNumber(0, setlssong.length - 1);
+        screen.createBold(`You have been asked to prepare a lip-sync of ${setlssong[song]}!`);
+        setls = 0;
+        setlssong = [];
+    }
 }
 let allLsSongs = [
     "Supermodel by RuPaul",
