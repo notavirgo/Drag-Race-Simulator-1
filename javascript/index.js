@@ -6788,7 +6788,7 @@ function lsaLipSync() {
         backToWinner = true;
                 assassin.lipstick = bottomQueens[0];
                 assassin.secondlipstick = bottomQueens[1];
-                assassin.reallipstick = top[0].lipstick;
+                assassin.reallipstick = top2[0].lipstick;
 
     } else {
         assassin.lipstick = bottomQueens[0];
