@@ -7353,7 +7353,7 @@ function LsaElimination(reason)
         screen.createBold("The group has spoken and they have chosen "+assassin.lipstick.getName()+" to go home tonight.");
     }
     screen.createImage(top2[0].lipstick.image, "red");
-    if(!backToWinner)
+    if(!backToWinner && top2[0].getName()!=assassin.getName())
     {
         screen.createBold(top2[0].lipstick.getName() + ", my dear queen.");
         if (chocolateBarTwist  && !chocolateBarTwistCheck) {
