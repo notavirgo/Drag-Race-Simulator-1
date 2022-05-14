@@ -2094,6 +2094,17 @@ function newEpisode() {
         queensRemainingScreen.createHeader("Full cast");
         for (let i = 0; i < currentCast.length; i++) {
             fullCast.push(currentCast[i]);
+            for (let j = 0; j < currentCast.length; j++) {
+
+                currentCast[i].AddRelation(currentCast[j]);
+                if(currentCast[i].getFirstSeason() == currentCast[j].getFirstSeason() && (all_stars || lipsync_assassin))
+                {
+                    if(currentCast[i].GetRelation(currentCast[j])==0)
+                        currentCast[i].ChangeRelation(currentCast[j],1);
+                    if(currentCast[j].GetRelation(currentCast[i])==0)
+                        currentCast[j].ChangeRelation(currentCast[i],1);
+                }
+            }
         }
         for (let i = 0; i < currentCast.length; i++) {
             queensRemainingScreen.createImage(currentCast[i].image);
@@ -2120,7 +2131,6 @@ function newEpisode() {
                 let countsisters = 0;
                 let originalseason = "";
                 let originalqueens = [];
-
                 
 
                 console.log(currentCast[i].getFirstSeason());
@@ -2265,8 +2275,7 @@ function newEpisode() {
                     }
                 }
             }
-            
-           
+                
         }
     }
     else {
@@ -4068,20 +4077,6 @@ let team = false;
 function predefCast(cast, format, premiere = '', returning = '', others = '') {
     currentCast = cast;
     totalCastSize = cast.length;
-
-    for (let i = 0; i < currentCast.length; i++) {
-        for (let j = 0; j < currentCast.length; j++) {
-            currentCast[i].AddRelation(currentCast[j]);
-            if(currentCast[i].getFirstSeason() == currentCast[j].getFirstSeason() && (all_stars || lipsync_assassin))
-            {
-                if(currentCast[i].GetRelation(currentCast[j])==0)
-                    currentCast[i].ChangeRelation(currentCast[j],1);
-                if(currentCast[j].GetRelation(currentCast[i])==0)
-                    currentCast[j].ChangeRelation(currentCast[i],1);
-            }
-        } 
-    }
-
     if (format == "top3")
         top3 = true;
     else if (format == "top4")
@@ -7353,7 +7348,7 @@ function LsaElimination(reason)
         screen.createBold("The group has spoken and they have chosen "+assassin.lipstick.getName()+" to go home tonight.");
     }
     screen.createImage(top2[0].lipstick.image, "red");
-    if(!backToWinner && top2[0].getName()!=assassin.getName())
+    if(backToWinner == false && top2[0].getName()!=assassin.getName())
     {
         screen.createBold(top2[0].lipstick.getName() + ", my dear queen.");
         if (chocolateBarTwist  && !chocolateBarTwistCheck) {
@@ -7411,7 +7406,7 @@ function LsaElimination(reason)
         else
             screen.createButton("Proceed", "newEpisode()");
     }
-    else if(backToWinner && top2[0] == assassin)
+    else if(backToWinner == true && top2[0].getName() == assassin.getName() )
     {
         screen.createBold(top2[0].lipstick.getName() + ", my dear queen.");
         screen.createButton("Proceed", "BackToWinner()");
@@ -7449,7 +7444,6 @@ function BackToWinner()
     screen.createImage(top2[1].image);
     screen.createBold('I have chosen to send '+top2[1].lipstick.getName()+' to send home tonight.');
     assassin.lipstick = assassin.reallipstick;
-
     if (chocolateBarTwist  && !chocolateBarTwistCheck) {
         screen.createBold(top2[0].lipstick.getName() + ", now your fate rests in the hands of the drag gods.");
         screen.createBold("If you have the golden chocolate bar, you will be safe.");
@@ -11276,12 +11270,14 @@ class Scene {
         let hr = document.createElement("hr");
         this._MainBlock.appendChild(hr);
     }
+
     createImage(source, color = "black") {
         let image = document.createElement("img");
         image.src = source;
         image.setAttribute("style", `border-color: ${color}; width: 105px; height: 105px;`);
         this._MainBlock.appendChild(image);
     }
+
     createImageBW(source, color = "black") {
         let image = document.createElement("img");
         image.src = source;
