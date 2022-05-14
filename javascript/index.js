@@ -7412,6 +7412,64 @@ function LsaElimination(reason)
         screen.createButton("Proceed", "BackToWinner()");
         
     }
+    else
+    {
+        screen.createBold(top2[0].lipstick.getName() + ", my dear queen.");
+        if (chocolateBarTwist  && !chocolateBarTwistCheck) {
+            screen.createBold(top2[0].lipstick.getName() + ", now your fate rests in the hands of the drag gods.");
+            screen.createBold("If you have the golden chocolate bar, you will be safe.");
+            if (chocolateBarCheck(top2[0].lipstick) == true) {
+                screen.createImage("image/ChocolateBarWithTicket.webp", "gold");
+                screen.createBold("You've got the GOLD BAR!!!! The gods have spoken!");
+                screen.createBold(top2[0].lipstick.getName() + "!! Condragtulations, you are safe to slay another day!");
+                top2[0].lipstick.addToTrackRecord("CHOC");
+                top2[0].lipstick.unfavoritism += 3;
+                top2[0].lipstick.ppe += 1;
+                top2[0].lipstick.votes = 0;
+                chocolateBarTwistCheck = true;
+                bottomQueens.splice(bottomQueens.indexOf(top2[0].lipstick), 1);
+                
+            } else {
+                screen.createImage("image/ChocolateBarWithNoTicket.webp", "brown");
+                screen.createBold("It's chocolate.");
+                screen.createBold(`${top2[0].lipstick.getName()}, you will always be an All Star, now, sashay away...`);
+                top2[0].lipstick.addToTrackRecord("ELIM");
+                top2[0].lipstick.unfavoritism += 5;
+                top2[0].lipstick.votes = 0;
+                eliminatedCast.unshift(top2[0].lipstick);
+                bottomQueens.splice(bottomQueens.indexOf(top2[0].lipstick), 1);
+                currentCast.splice(currentCast.indexOf(top2[0].lipstick), 1);
+                
+            }
+        } else {
+            screen.createBold(top2[0].lipstick.getName() + ", you will always be an All Star, now, sashay away...");
+            top2[0].lipstick.addToTrackRecord("ELIM");
+            top2[0].lipstick.unfavoritism += 5;
+            top2[0].lipstick.votes = 0;
+            eliminatedCast.unshift(top2[0].lipstick);
+            bottomQueens.splice(bottomQueens.indexOf(top2[0].lipstick), 1);
+            currentCast.splice(currentCast.indexOf(top2[0].lipstick), 1); 
+        }
+        for (let i = 0; i < bottomQueens.length; i++) {
+            if (bottomQueens.length == 4)
+                bottomQueens[i].addToTrackRecord("BTM5");
+            else if (bottomQueens.length == 3)
+                bottomQueens[i].addToTrackRecord("BTM4");
+            else if (bottomQueens.length == 2)
+                bottomQueens[i].addToTrackRecord("BTM3");
+            else
+                bottomQueens[i].addToTrackRecord("BTM2");
+            bottomQueens[i].unfavoritism += 2;
+            bottomQueens[i].ppe += 1;
+            bottomQueens[i].votes = 0;
+        }
+        if ((s6Premiere || s12Premiere || porkchopPremiere || s14Premiere) == true && premiereCounter < 3)
+            screen.createButton("Proceed", "doublePremiere()");
+        else if (CheckForReturning() == true)
+            screen.createButton("Proceed", "returningQueenScreen()");
+        else
+            screen.createButton("Proceed", "newEpisode()");
+    }
 }
 
 function BackToWinner()
