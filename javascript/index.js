@@ -2185,6 +2185,9 @@ function newEpisode() {
                         case"US14":
                             originalseason = "US Season 14";
                             break;
+                        case"US15":
+                            originalseason = "US Season 15";
+                            break;
                         case"UK1":
                             originalseason = "UK Season 1";
                             break;
