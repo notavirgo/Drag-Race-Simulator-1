@@ -83,7 +83,8 @@ let entrancelinesas = [
     "I didn’t come to crash the party, I came to end it!",
     "You know they done fucked up, right?",
     "Well looks like it wasn't my last dance after all!",
-    "The same, this time with more cash."
+    "The same, this time with more cash.",
+    "Ya saucy home girl is back... and she's sweeter than before!"
 ];
 
 let entrancelineres = [
@@ -93,7 +94,8 @@ let entrancelineres = [
     "WERK!",
     "Facecrack of the century...",
     "Oh wow.",
-    "Oh."
+    "Oh.",
+    "Girl... She look a fuck ass mess."
 ];
 
 class Event{
@@ -1033,8 +1035,9 @@ class Rusical {
             desc[desc["Madonna: The Unauthorized Rusical."] = 15] = "Madonna: The Unauthorized Rusical.";
             desc[desc["Máxima - The Rusical."] = 16] = "Máxima - The Rusical.";
             desc[desc["Rats: The Rusical."] = 17] = "Rats: The Rusical.";
+            desc[desc["Moulin Ru: The Rusical."] = 18 = "Moulin Ru: The Rusical.";
         })(desc || (desc = {}));
-        description.innerHTML = "Today's challenge is... THE RUSICAL!! The queens were tasked to take part in " + desc[randomNumber(0, 17)];
+        description.innerHTML = "Today's challenge is... THE RUSICAL!! The queens were tasked to take part in " + desc[randomNumber(0, 18)];
     }
     rankPerformances() {
         for (let i = 0; i < currentCast.length; i++)
@@ -1130,8 +1133,9 @@ class Rumix {
             desc1[desc1["This Is Our Country."] = 13] = "This Is Our Country.";
             desc1[desc1["Hey Sis, It's Christmas."] = 14] = "Hey Sis, It's Christmas.";
             desc1[desc1["Queen of the North."] = 15] = "Queen of the North.";
+            desc1[desc1["Catwalk."] = 16 = "Catwalk.";
         })(desc1 || (desc1 = {}));
-        description.innerHTML = "Today's challenge is... the rumix! The queens will make a verse and a choreography for " + desc1[randomNumber(0, 15)];
+        description.innerHTML = "Today's challenge is... the rumix! The queens will make a verse and a choreography for " + desc1[randomNumber(0, 16)];
     }
     rankPerformances() {
         for (let i = 0; i < currentCast.length; i++)
@@ -1178,8 +1182,11 @@ class GirlGroup {
             desc1[desc1["So Much Better Than You"] = 18] = "So Much Better Than You";
             desc1[desc1["Can I Get An Amen?"] = 19] = "Can I Get An Amen?";
             desc1[desc1["Oh No She Betta Don't!"] = 20] = "Oh No She Betta Don't!";
+            desc1[desc1["He's My Baby"] = 21] = "He's My Baby";
+            desc1[desc1["Bad Boy Baby!"] = 22] = "Bad Boy Baby!";
+            desc1[desc1["My Baby Is Love"] = 23] = "My Baby Is Love";
         })(desc1 || (desc1 = {}));
-        description.innerHTML = "The remaining queens will record vocals and perform in a Girl Group number for the original song " + desc1[randomNumber(0, 20)] + ".";
+        description.innerHTML = "The remaining queens will record vocals and perform in a Girl Group number for the original song " + desc1[randomNumber(0, 23)] + ".";
     }
     rankPerformances() {
         for (let i = 0; i < currentCast.length; i++)
@@ -9546,6 +9553,23 @@ let maddy = new Queen("Maddy Morphosis", 8, 7, 6, 5, 6, 9, 7, "Maddy",false, "US
 let orion = new Queen("Orion Story", 4, 6, 6, 5, 6, 6, 9, "Orion",false, "US14");
 let willow = new Queen("Willow Pill", 11, 8, 7, 10, 10, 12, 8, "Willow",false, "US14");
 let us_season14 = [alyssaH, angeria, bosco, daya, deja, jasmineK, jorgeous, june, kerri, kornbread, cadmen, maddy, orion, willow];
+//SEASON 15
+let amethyst = new Queen("Amethyst", 7, 7, 7, 7, 7, 7, 7, "Amethyst",false, "US15");
+let anetra = new Queen("Anetra", 7, 7, 7, 7, 7, 7, 7, "Anetra",false, "US15");
+let auraM = new Queen("Aura Mayari", 7, 7, 7, 7, 7, 7, 7, "AuraM",false, "US15");
+let irene = new Queen("Irene Dubois", 7, 7, 7, 7, 7, 7, 7, "Irene",false, "US15");
+let jax = new Queen("Jax", 7, 7, 7, 7, 7, 7, 7, "Jax",false, "US15");
+let loosey = new Queen("Loosey LaDuca", 7, 7, 7, 7, 7, 7, 7, "Loosey",false, "US15");
+let luxx = new Queen("Luxx Noir London", 7, 7, 7, 7, 7, 7, 7, "Luxx",false, "US15");
+let marcia = new Queen("Marcia, Marcia, Marcia", 7, 7, 7, 7, 7, 7, 7, "Marcia",false, "US15");
+let mistressI = new Queen("Mistress Isabelle Brooks", 7, 7, 7, 7, 7, 7, 7, "MistressI",false, "US15");
+let princesspoppy = new Queen("Princess Poppy", 7, 7, 7, 7, 7, 7, 7, "PrincessPoppy",false, "US15");
+let robinF = new Queen("Robin Fierce", 7, 7, 7, 7, 7, 7, 7, "RobinF",false, "US15");
+let salina = new Queen("Salina Estitties", 7, 7, 7, 7, 7, 7, 7, "Salina",false, "US15");
+let sashacolby = new Queen("Sasha Colby", 7, 7, 7, 7, 7, 7, 7, "SashaColby",false, "US15");
+let sugar = new Queen("Sugar", 7, 7, 7, 7, 7, 7, 7, "Sugar",false, "US15");
+let spice = new Queen("Spice", 7, 7, 7, 7, 7, 7, 7, "Spice",false, "US15");
+let us_season14 = [amethyst, anetra, auraM, irene, jax, loosey, luxx, marcia, mistressI, princesspoppy, robinF, salina, sashacolby, sugar, spice];
 //DRUK SEASON 1 
 let baga = new Queen("Baga Chipz", 13, 12, 5, 5, 13, 8, 7, "Baga",false, "UK1");
 let blu = new Queen("Blu Hydrangea", 5, 9, 8, 10, 10, 12, 9, "Blu",false, "UK1");
@@ -11559,7 +11583,7 @@ let allLsSongs = [
     "Your Disco Needs You by Kylie Minogue",
     "Froot by MARINA",
     "She Works Hard For The Money by Donna Summer",
-    "Supernova by Carly Rae Jepsen",
+    "Supernova by Kylie Minogue",
     "Detention by Melanie Martinez",
     "Complicated by Avril Lavigne",
     "So What by P!nk",
